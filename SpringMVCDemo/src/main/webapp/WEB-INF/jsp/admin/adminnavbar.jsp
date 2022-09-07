@@ -62,7 +62,7 @@ font-family: 'Lato', sans-serif;
         <hr class="dropdown-divider">
         	<ul class="multi-column-dropdown">
         	<li><a class="dropdown-item" href="new-policy">
-			Add Policy</a></li>
+			Add New Policy</a></li>
 			<li><a class="dropdown-item" href="update-policy">
 			Update Policy</a></li>
 			</ul>

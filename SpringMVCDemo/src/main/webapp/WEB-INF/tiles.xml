@@ -23,7 +23,7 @@
         template="/WEB-INF/jsp/layout.jsp">  
         <put-attribute name="title" value="" />  
         <put-attribute name="header" value="" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/admin/aadminnavbar.jsp" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/admin/adminnavbar.jsp" />  
         <put-attribute name="body" value="" />  
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
     </definition> 
@@ -35,6 +35,7 @@
         <put-attribute name="body" value="" />  
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
     </definition>
+    
     <!-- Home Definitions -->   
     <definition name="registerform" extends="base.definition">  
         <put-attribute name="title" value="Register Form" />  
@@ -108,23 +109,23 @@
     </definition>
     <definition name="adminAddPolicy" extends="base3.definition">  
         <put-attribute name="title" value="Add New Policy Page" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/aadminAddPolicy.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminAddPolicy.jsp" />  
     </definition> 
     <definition name="adminUpdatePolicy" extends="base3.definition">  
         <put-attribute name="title" value="Add New Policy Page" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/aadminUpdatePolicy.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminUpdatePolicy.jsp" />  
     </definition> 
      <definition name="adminViewCustomer" extends="base3.definition">  
         <put-attribute name="title" value="Add New Policy Page" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/aadminViewCustomer.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminViewCustomer.jsp" />  
     </definition>     
      <definition name="adminViewClaim" extends="base3.definition">  
         <put-attribute name="title" value="View Customer Claim" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/aadminViewClaim.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminViewClaim.jsp" />  
     </definition> 
     <definition name="adminProfile" extends="base3.definition">  
         <put-attribute name="title" value="View Admin Profile" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/aadminProfile.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminProfile.jsp" />  
     </definition> 
     
     <!-- Customer Definitions -->

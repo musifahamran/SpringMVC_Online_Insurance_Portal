@@ -85,6 +85,9 @@ background-attachment: fixed;
                         <p class="lead"></p>
                         <p></p>
                     </div>
+                    <div class="col-lg-8 order-2 order-lg-1 text-end">
+                        <button type="button" class="btn btn-secondary" style="width:90px;height:40px;"><a class="nav-link" href="homePage">Logout</a></button>
+                    </div>
             </div>
         </div>
 </section>

@@ -1,22 +1,48 @@
 package com.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
+@Entity
+@Table(name = "user_table")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class User {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="user_id")
 	private int id;
+	
+	@Column(name = "user_role")
 	private String role;
 	
 	@NotBlank(message="Please enter username")
+	@Column(name="user_username")
 	private String username;
 	
 	@NotBlank(message="Please enter password")
 	@Size(min=8,message="Password length min is 8 characters")
+	@Column(name="user_password")
 	private String password;
+
+	public User(){
+		
+	}
+	public User(String username, String password) {
+		this.username=username;
+		this.password=password;
+	}
 
 	public int getId() {
 		return id;

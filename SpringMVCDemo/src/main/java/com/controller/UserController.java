@@ -31,12 +31,12 @@ public class UserController {
     }	
 	@RequestMapping(value="/checklogin",method = RequestMethod.POST)    
     public String checkLogin(@ModelAttribute("user") User user,Model m, RedirectAttributes redirAttrs){    
-       List<User> login = userdao.checkLogin(user.getUsername(),user.getPassword());
-        if(login.get(0).getRole().equalsIgnoreCase("customer")) {
+       String role = userdao.checkLogin(user.getUsername(),user.getPassword());
+        if(role.equalsIgnoreCase("customer")) {
         	m.addAttribute("message", user.getUsername());
         	return "customerPortal";//will redirect to success page
         }
-        else if(login.get(0).getRole().equalsIgnoreCase("admin")) {
+        else if(role.equalsIgnoreCase("admin")) {
         	m.addAttribute("message", user.getUsername());
         	return "adminPortal";//will redirect to success page
         }

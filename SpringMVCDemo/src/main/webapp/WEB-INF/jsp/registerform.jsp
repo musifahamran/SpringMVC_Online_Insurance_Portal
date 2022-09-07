@@ -11,6 +11,32 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 <style>
 .error{color:red}
+.nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.nav-tabs .nav-link:hover{
+    border: none;
+}
+.nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
 </style>
 </head>  
 <body>
@@ -28,9 +54,23 @@
                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height:86vh;" />
             </div>
             <div class="col-xl-6">
-            <form:form method="post" action="save">  
+            <form:form method="post" action="save">
+            <div class="row">
               <div class="card-body p-md-5 text-black">
+               <div class="col">
                 <h3 class="mb-5 text-uppercase">Sign Up</h3>
+                </div>
+                 <div class="col">
+                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Personal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Corporate</a>
+                            </li>
+                        </ul>
+                 </div>
+                 </div>  
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">

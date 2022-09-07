@@ -18,7 +18,7 @@ body{
 </style>
 <br>
 <section class="table-responsive-sm">
-<h4 class="display-5" align="center">My Policy</h4>
+<h4 class="display-5" align="center">My Claim</h4>
 <br>
 <table class="table table-striped table-hover center" style="width:80%;">
         <thead class="table-dark">
