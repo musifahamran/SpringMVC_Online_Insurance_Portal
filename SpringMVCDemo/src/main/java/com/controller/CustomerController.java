@@ -21,9 +21,8 @@ public class CustomerController {
 	@Autowired    
 	CustomerDao customerdao;
 	
-	@RequestMapping("/registerform")    
-    public String showRegisterform(Model m){    
-        m.addAttribute("command", new Customer());  
+	@RequestMapping(value="/registerform" ,method=RequestMethod.GET)    
+    public String showRegisterform(Customer customermodel){ 
         return "registerform";   
     }
 	@RequestMapping("/customerPortal")    
@@ -55,18 +54,18 @@ public class CustomerController {
         return "customerUpdatePolicy";   
     }
 	 @RequestMapping(value="/save",method = RequestMethod.POST)    
-	    public String save(@Valid @ModelAttribute("customer") Customer customer, BindingResult br, RedirectAttributes redirAttrs){   
+	    public String save( @ModelAttribute("customer") @Valid Customer customer, BindingResult br, Model m){
+		
+		 m.addAttribute("message", "");
 		 if(br.hasErrors()) {
-			 redirAttrs.addFlashAttribute("org.springframework.validation.BindingResult.user", br);
-			 redirAttrs.addFlashAttribute("customer", customer);
-			 return  "redirect:registerform";
+			 return  "registerform";
 		 }
 		 else {
-			 customerdao.save(customer);
-			 redirAttrs.addFlashAttribute("message", "You have registered successfully!");
+			 customerdao.add(customer);
+			 m.addAttribute("message", "You have registered successfully!");
 		 }
 	        
-	       return "redirect:registerform";//will redirect to register form    
+	       return "registerform";//will redirect to register form    
 	 } 
 
 }

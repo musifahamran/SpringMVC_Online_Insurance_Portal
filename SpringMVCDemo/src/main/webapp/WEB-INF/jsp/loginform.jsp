@@ -205,12 +205,13 @@ margin-left: 4px;
 			<h3>Sign In</h3>
 			</div>
 			<div class="card-body">
-				 <form:form method="post" action="checklogin">
+				 <form:form method="post" action="checklogin" modelAttribute="user">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
 						</div>
 						<form:input path="username" type="text" class="form-control" placeholder="username"/>
+						 <form:errors path="username" cssClass="error"/>
 					</div>
 					<br>
 					<div class="input-group form-group">
@@ -218,12 +219,14 @@ margin-left: 4px;
 							<span class="input-group-text"><i class="fa fa-key"></i></span>
 						</div>
 						<form:password path="password" class="form-control" placeholder="password"/>
+						 <form:errors path="password" cssClass="error"/>
 					</div>
 					<br>
 					<div class="form-group" style="padding:0px 50px;">
 						<input type="submit" value="Login" class="btn btn-primary mb-3">
 					</div>
 				</form:form>
+				 <span style="color:red;"id="message">${message}</span>
 			</div>
 		<div class="card-footer">
 				<div class="d-flex justify-content-center links">

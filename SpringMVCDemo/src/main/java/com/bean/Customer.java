@@ -31,17 +31,23 @@ public class Customer extends User{
 	
 	@NotBlank(message="Please enter email")
 	@Pattern(regexp="^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",message="Please input valid email address")
-	@Column(name="cus_email")
+	@Column(name="cus_email", unique =true)
 	private String email;
 	
 	@NotBlank(message="Please enter phone number")
 	@Pattern(regexp="^([0-9]{8})$", message="Please enter 8 digit contact number")
-	@Column(name="cus_contactNo")
+	@Column(name="cus_contactNo", unique =true)
 	private String contactNo;
 	
 	@NotNull(message="Please select a gender")
 	@Column(name="cus_gender")
-	private String gender;	
+	private String gender;
+	
+	@Column(name="cus_customerType")
+	private String customerType;
+	
+	@Column(name="cus_companyName")
+	private String companyName;
 	
 	public String getFname() {
 		return fname;
@@ -80,6 +86,22 @@ public class Customer extends User{
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 

@@ -24,26 +24,32 @@ public class UserController {
 	@Autowired
 	UserDao userdao;//will inject dao from XML file 
 	   
-	@RequestMapping("/loginform")    
-    public String showLoginform(Model m){  
-		m.addAttribute("command", new User());  
+	@RequestMapping(value="/loginform",  method=RequestMethod.GET)    
+    public String showLoginform(User usermodel){  
         return "loginform";   
     }	
 	@RequestMapping(value="/checklogin",method = RequestMethod.POST)    
-    public String checkLogin(@ModelAttribute("user") User user,Model m, RedirectAttributes redirAttrs){    
-       String role = userdao.checkLogin(user.getUsername(),user.getPassword());
-        if(role.equalsIgnoreCase("customer")) {
-        	m.addAttribute("message", user.getUsername());
-        	return "customerPortal";//will redirect to success page
-        }
-        else if(role.equalsIgnoreCase("admin")) {
-        	m.addAttribute("message", user.getUsername());
-        	return "adminPortal";//will redirect to success page
-        }
-        else {
-        	redirAttrs.addFlashAttribute("message", "Invalid Username or Password.");
-        	return "loginform";
-        }
+    public String checkLogin(@ModelAttribute("user") @Valid User user, BindingResult br, Model m){ 
+		 m.addAttribute("message", "");
+		 if(br.hasErrors()) {
+			 return  "registerform";
+		 }
+		 else {
+			 String role = userdao.checkLogin(user.getUsername(),user.getPassword());
+		        if(role.equalsIgnoreCase("customer")) {
+		        	m.addAttribute("message", user.getUsername());
+		        	return "customerPortal";//will redirect to success page
+		        }
+		        else if(role.equalsIgnoreCase("admin")) {
+		        	m.addAttribute("message", user.getUsername());
+		        	return "adminPortal";//will redirect to success page
+		        }
+		        else {
+		        	m.addAttribute("message", "Invalid Username or Password.");
+		        	return "loginform";
+		        }
+			 
+		 }
     } 
 	@RequestMapping("/change-pwd")    
     public String showPasswordPage(){  

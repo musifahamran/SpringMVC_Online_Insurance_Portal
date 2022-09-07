@@ -27,10 +27,10 @@ public class Admin extends User{
 		@Column(name="admin_lname")
 		private String lname;
 		
-		@Column(name="admin_email")
+		@Column(name="admin_email", unique =true)
 		private String email;
 
-		@Column(name="admin_contactNo")
+		@Column(name="admin_contactNo", unique =true)
 		private String contactNo;
 		
 		@Column(name="admin_gender")

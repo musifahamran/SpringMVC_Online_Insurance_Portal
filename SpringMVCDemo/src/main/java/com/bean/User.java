@@ -28,7 +28,7 @@ public class User {
 	private String role;
 	
 	@NotBlank(message="Please enter username")
-	@Column(name="user_username")
+	@Column(name="user_username", unique =true)
 	private String username;
 	
 	@NotBlank(message="Please enter password")

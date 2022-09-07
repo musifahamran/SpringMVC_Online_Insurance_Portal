@@ -48,40 +48,43 @@
       <div class="col">
         <div class="card card-registration my-4">
           <div class="row g-0">
-            <div class="col-xl-6 d-none d-xl-block">
+            <div class="col-xl-5 d-none d-xl-block">
               <img src="resources/image/registerPhoto.jpg"
                 alt="Sample photo" class="img-fluid"
                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height:86vh;" />
             </div>
-            <div class="col-xl-6">
-            <form:form method="post" action="save">
-            <div class="row">
+            <div class="col-xl-7">
+            <form:form method="post" action="save" modelAttribute="customer">
               <div class="card-body p-md-5 text-black">
-               <div class="col">
                 <h3 class="mb-5 text-uppercase">Sign Up</h3>
+                
+                   <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                  <h6 class="mb-0 me-4">Insurance for: </h6>
+					
+				  <div class="form-check form-check-inline mb-0 me-4">
+                    <form:radiobutton path="CustomerType" value="Personal" class="form-check-input"/>  
+                    <label class="form-check-label" for="PersonalUser">Personal</label>
+                  </div>
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <form:radiobutton path="CustomerType" value="Corporate" class="form-check-input"/>  
+                    <label class="form-check-label" for="CorporateUser">Corporate</label>
+                  </div>
                 </div>
-                 <div class="col">
-                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Personal</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Corporate</a>
-                            </li>
-                        </ul>
-                 </div>
-                 </div>  
+                 
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                     <label class="form-label" for="form3Example1m">First name</label>
                       <form:input path="fname" type="text" id="form3Example1m" class="form-control form-control-lg" />
+                      <form:errors path="fname" cssClass="error"/>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                      <label class="form-label" for="form3Example1n">Last name</label>
                       <form:input path="lname" type="text" id="form3Example1n" class="form-control form-control-lg" />
+                      <form:errors path="lname" cssClass="error"/>
                     </div>
                   </div>
                 </div>
@@ -91,6 +94,7 @@
                     <div class="form-outline">
                      <label class="form-label" for="form3Example1m1">Username</label>
                       <form:input path="username" type="text" id="form3Example1m1" class="form-control form-control-lg" />
+                      <form:errors path="username" cssClass="error"/>
                      
                     </div>
                   </div>
@@ -98,6 +102,7 @@
                     <div class="form-outline">
                     <label class="form-label" for="form3Example1n1">Password</label>
                       <form:password path="password" id="form3Example1n1" class="form-control form-control-lg" />
+                          <form:errors path="password" cssClass="error"/>
                     </div>
                   </div>
                 </div>
@@ -106,12 +111,14 @@
                     <div class="form-outline">
                     <label class="form-label" for="form3Example1n1">Email ID</label>
                       <form:input path="email" type="text" id="form3Example1n1" class="form-control form-control-lg" />
+                          <form:errors path="email" cssClass="error"/>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                      <label class="form-label" for="form3Example1m1">Contact No</label>
                       <form:input path="contactNo" type="text" id="form3Example1m1" class="form-control form-control-lg" />
+                      <form:errors path="contactNo" cssClass="error"/>
                     </div>
                   </div>
                 </div>
@@ -136,6 +143,7 @@
 
               </div>
               </form:form>
+              <span style="color:red;"id="message">${message}</span>
             </div>
           </div>
         </div>
