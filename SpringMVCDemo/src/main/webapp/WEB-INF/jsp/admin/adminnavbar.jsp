@@ -79,8 +79,8 @@ font-family: 'Lato', sans-serif;
      <li class="nav-item dropdown">
      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" data-offset="200,200" aria-haspopup="true" aria-expanded="false">
           <span style="top-padding:30px;"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span></a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        	<ul class="multi-column-dropdown dropdown-menu-sm-end ml-auto">
+        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" >
+        	<ul class="multi-column-dropdown ">
         	<li><a class="dropdown-item" href="view-profile">
 			View Profile</a></li>
 			<li><a class="dropdown-item" href="<c:url value="/change-adminPwd" />">Change password</a></li>

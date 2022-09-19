@@ -17,7 +17,7 @@
 <div class="form-gap"></div>
 <div class="container" >
 	<div class="row">
-		<div class="col-md-3 offset-md-4">
+		<div class="col-md-3 offset-md-4 mx-auto">
             <div class="panel panel-default">
               <div class="panel-body">
                 <div class="text-center">

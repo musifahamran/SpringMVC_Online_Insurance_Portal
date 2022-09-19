@@ -71,9 +71,6 @@ public class CustomerController {
 	ClaimDao claimdao;
 	
 	@Autowired
-    MailSender maildao;
-	
-	@Autowired
 	EmailDao emaildao;
 	
 	@RequestMapping(value="/registerform" ,method=RequestMethod.GET)    

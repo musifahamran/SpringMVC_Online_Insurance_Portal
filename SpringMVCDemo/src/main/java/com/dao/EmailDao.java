@@ -48,11 +48,15 @@ public class EmailDao {
 		for(CustomerPolicy customerPolicy:c1.getCustomerpolicy()) {
 			if(customerPolicy.getCustomerpolicy_id() == id) {
 				content = "This is a confirmation email to let you know that your policy plan for " + customerPolicy.getPolicy().getName() 
-						+ " has been upgraded to Premium. <br>Our Agent will shortly contact you for more details.";
+						+ " has been upgraded to Premium. <br><br>Premium Plan: " 
+						+ "<br>Rate (%): " + p1.getRate() + "<br>Duration (Year): " +p1.getDuration() + "<br>Coverage: $" + String.format("%.0f",p1.getCoverage())
+						+ "<br>Total Price: $" + String.format("%.0f",(customerPolicy.getPolicy().getPrice()+p1.getAdditional_charge())) + "<br><br> You will be charged monthly at: $" + 
+						String.format("%.0f", ((customerPolicy.getPolicy().getPrice()+p1.getAdditional_charge())/12*p1.getDuration()))
+						+"<br>Our Agent will shortly contact you for more details.";
 				break;
 			}
 		}
-		String ending = "<br><br>Thank you for using our Insurance Portal. Have a nice day.";
+		String ending = "<br><br>Thank you for using Prodexa's Insurance Portal. Have a nice day.";
 		
 		
 		return greeting + content + ending;

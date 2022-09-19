@@ -17,12 +17,12 @@
 <section>
 <div class="container py-5 ">
 	<div class="row">
-		<div class="col-sm-12">
-		<h1>Change Password</h1>
+		<div class="col-sm-6 col-sm-offset-3 mx-auto">
+		<h2>Change Password</h2>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-6 col-sm-offset-3 mx-auto">
 		<div class="card mb-5">
           <div class="card-body">
 			<p class="text-left">Use the form below to change your password. Your password cannot be the same as your username.</p>
