@@ -102,8 +102,10 @@ public class CustomerController {
 	public String saveProfilePage(@RequestParam("customer_fname") String fname, @RequestParam("customer_lname") String lname,
 									@RequestParam("customer_address") String address, @RequestParam("customer_contactNo") String contactNo,
 									@RequestParam("customer_email") String email,  HttpServletRequest request, RedirectAttributes redirArr){
-		User u1 = (User) request.getSession().getAttribute("currentUser");
-		Customer customer = customerdao.getById(u1.getId());
+		 User u1 = (User) request.getSession().getAttribute("currentUser");
+		 Customer customer = customerdao.getById(u1.getId());
+		 
+		 //Set updated details to customer bean
 		 customer.setContactNo(contactNo);
 		 customer.setEmail(email);
 		 customer.setAddress(address);
@@ -125,6 +127,8 @@ public class CustomerController {
     public String customerViewClaimPage(Customer customer, Model m, HttpServletRequest request){ 
 		User u1 = (User) request.getSession().getAttribute("currentUser");
 		Customer c1 = customerdao.getById(u1.getId());
+		
+		//Retrieve all claims from current customer
 		List<Claim> myClaim = c1.getClaim();
 		m.addAttribute("customerObj", c1);
 		m.addAttribute("myClaim",myClaim );
@@ -138,6 +142,8 @@ public class CustomerController {
     public String customerAddPolicyPage(Policy policymodel, Model m, HttpServletRequest request){ 
 		User u1 = (User) request.getSession().getAttribute("currentUser");
 		Customer c1 = customerdao.getById(u1.getId());
+		
+		//Retrieve details of all policies to be set in view
 		List<PolicyType> policyTypes = policytypedao.getAll();
 		List<Policy> policyList = policydao.getAll();
 		m.addAttribute("policyTypes", policyTypes);
@@ -149,6 +155,8 @@ public class CustomerController {
     public String customerAddClaimPage(Claim claimModel, Model m, HttpServletRequest request){  
 		User u1 = (User) request.getSession().getAttribute("currentUser");
 		Customer c1 = customerdao.getById(u1.getId());
+		
+		//Filter distinct policy category for user to select
 		List<PolicyType> p1 = customerpolicydao.getDistinctType(c1.getCustomerpolicy());
 		m.addAttribute("claim", claimModel = new Claim());
 		m.addAttribute("customerObj", c1);
@@ -166,7 +174,8 @@ public class CustomerController {
     		RedirectAttributes redirArr) throws IOException{  
 		User u1 = (User) request.getSession().getAttribute("currentUser");
 		Customer c1 = customerdao.getById(u1.getId());
-		//List<Claim> claims = c1.getClaim();
+		
+		//Get claim to update files uploaded by user
 		Claim claim = claimdao.getById(id);
 		claim.setClaimStatus("Pending review");
 		 if (fileUpload != null) {
@@ -187,33 +196,42 @@ public class CustomerController {
     public String customerUpdatePolicyPage(@PathVariable int id,  HttpServletRequest request, RedirectAttributes redirArr) throws MessagingException{  
 		User u1 = (User) request.getSession().getAttribute("currentUser");
 		Customer c1 = customerdao.getById(u1.getId());
+		
+		//Get the customer's policy to update the plan
 		CustomerPolicy cp1 = customerpolicydao.getById(id);
 		PolicyPlan p1 = policyplandao.getPlan(cp1.getPolicyplan().getPlan_id()+1);
 		redirArr.addFlashAttribute("updateMessage", "You have successfully upgraded your policy plan for " +cp1.getPolicy().getName() + " !");
 		policyplandao.update(c1,id, p1);
+		
+		//Send an email to customer's email address
 		String emailContent = emaildao.upgradePlan(c1,id, p1);
 	 	emaildao.sendMessage(c1.getEmail(),"Policy Plan Upgrade", emailContent);
         return "redirect:/my-policy";   
     }
 	 @RequestMapping(value="/save",method = RequestMethod.POST)    
-	    public String save( @ModelAttribute("customer") @Valid Customer customer, BindingResult br, Model m, RedirectAttributes rediAttrs){
-		
+	    public String save( @ModelAttribute("customer") @Valid Customer customer, BindingResult br, Model m, RedirectAttributes rediAttrs) throws MessagingException{
 		 m.addAttribute("message", "");
 		 m.addAttribute("successMessage", "");
+		 m.addAttribute("invalidMssg", "");
+		 m.addAttribute("invalidMssg1", "");
+		 m.addAttribute("invalidMessage", "");
 		 if(br.hasErrors()) {
 			 
 			 return  "registerform";
 		 }
 		 else {
-			 customerdao.add(customer);
-			 String emailContent = emaildao.successRegistration(customer);
-			 try {
-				emaildao.sendMessage(customer.getEmail(),"Welcome to Prodexa", emailContent);
-			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 rediAttrs.addFlashAttribute("successMessage", "You have registered successfully!");
+			 List<String> invalidMessage = customerdao.check(customer);
+			 if(invalidMessage == null) {
+				 customerdao.add(customer);
+				 String emailContent = emaildao.successRegistration(customer);
+				 //emaildao.sendMessage(customer.getEmail(),"Welcome to Prodexa", emailContent);
+				 rediAttrs.addFlashAttribute("successMessage", "You have registered successfully!");
+			 }
+			 else {
+				 m.addAttribute("invalidMessage", invalidMessage);
+				 return  "registerform";
+			 }
+			
 			 return "redirect:/registerform";
 		 }
 	         

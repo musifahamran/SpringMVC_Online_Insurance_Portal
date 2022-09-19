@@ -76,21 +76,19 @@ font-family: 'Lato', sans-serif;
       </li>
     </ul>
     <ul class="navbar-nav ms-auto">
-     <li class="nav-item dropdown">
-     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" data-offset="200,200" aria-haspopup="true" aria-expanded="false">
-          <span style="top-padding:30px;"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span></a>
-        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" >
-        	<ul class="multi-column-dropdown ">
+     <li class="nav-item dropdown-center">
+     <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="right:0%;">
+        	<ul class="multi-column-dropdown">
         	<li><a class="dropdown-item" href="view-profile">
 			View Profile</a></li>
 			<li><a class="dropdown-item" href="<c:url value="/change-adminPwd" />">Change password</a></li>
+			<hr>
 			<li><a class="dropdown-item" href="<c:url value="/homePage" />">Logout</a></li>
 			</ul>
         </div>
     </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/homePage" />">Logout</a>
-      </li>
     </ul>
   </div>
 </nav>  

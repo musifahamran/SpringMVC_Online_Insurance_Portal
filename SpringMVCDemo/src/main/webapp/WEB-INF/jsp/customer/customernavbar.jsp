@@ -88,20 +88,18 @@ font-family: 'Lato', sans-serif;
      <li class="nav-item dropdown">
      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span style="top-padding:30px;"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span></a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        	<ul class="multi-column-dropdown dropdown-menu-sm-end" style="right-padding:30px">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="right:0%;">
+        	<ul class="multi-column-dropdown dropdown-menu-sm-end" >
         	<li><a class="dropdown-item" href="<c:url value="/my-profile" />">
 			View Profile</a></li>
 			<li><a class="dropdown-item" href="<c:url value="/change-pwd" />">
 			Change password</a></li>
+			<hr>
 			<li><a class="dropdown-item" href="<c:url value="/homePage" />">
 			Logout</a></li>
 			</ul>
         </div>
     </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/homePage" />">Logout</a>
-      </li>
     </ul>
   </div>
 </nav>  

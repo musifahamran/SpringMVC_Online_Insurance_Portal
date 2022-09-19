@@ -55,27 +55,34 @@ z-index:1;
             <div class="col-xl-5 d-none d-xl-block">
               <img src="resources/image/registerPhoto.jpg"
                 alt="Sample photo" class="img-fluid"
-                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height:86vh;" />
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height:100%;" />
             </div>
             <div class="col-xl-7">
             <form:form method="post" action="save" modelAttribute="customer">
               <div class="card-body p-md-5 text-black">
                 <h3 class="mb-5 text-uppercase">Sign Up</h3>
-                
+                    	<c:if test="${!empty invalidMessage}">
+				 <div class="alert  alert-warning alert-dismissible fade show" role="alert" >
+				 <strong >Sorry!</strong><br>
+				 	<c:forEach items="${invalidMessage}" var="mssg">
+				 	${mssg}<br>
+				 	</c:forEach>
+				 	<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+				 </div>
+				 </c:if>
                    <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
 
                   <h6 class="mb-0 me-4">Insurance for: </h6>
 					
 				  <div class="form-check form-check-inline mb-0 me-4">
-                    <form:radiobutton path="CustomerType" value="Personal" class="form-check-input"/>  
+                    <form:radiobutton path="CustomerType" id="customer_personal" value="Personal" class="form-check-input"/>  
                     <label class="form-check-label" for="PersonalUser">Personal</label>
                   </div>
                   <div class="form-check form-check-inline mb-0 me-4">
-                    <form:radiobutton path="CustomerType" value="Corporate" class="form-check-input"/>  
+                    <form:radiobutton path="CustomerType" id="customer_corporate" value="Corporate" class="form-check-input"/>  
                     <label class="form-check-label" for="CorporateUser">Corporate</label>
                   </div>
                 </div>
-                 
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
@@ -139,7 +146,7 @@ z-index:1;
                     <label class="form-check-label" for="femaleGender">Female</label>
                   </div>
                 </div>
- 
+                
                 <div class="d-flex justify-content-end pt-3">
                   <button type="reset" class="btn btn-light btn-lg">Clear all</button>
                   <input type="submit" value="Register"class="btn btn-warning btn-lg ms-2">
@@ -164,6 +171,9 @@ z-index:1;
 		       Go to our login page to sign in! <a href="loginform">Click here!</a>
 		       <br> A confirmation email has been sent to the email you signed up.
 		    </div>
+		</div>
+		<div class="toast-container" id="toast-container">
+		
 		</div>
   <script>
   <c:if test="${!empty successMessage}">
