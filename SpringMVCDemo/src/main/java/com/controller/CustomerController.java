@@ -212,8 +212,6 @@ public class CustomerController {
 	    public String save( @ModelAttribute("customer") @Valid Customer customer, BindingResult br, Model m, RedirectAttributes rediAttrs) throws MessagingException{
 		 m.addAttribute("message", "");
 		 m.addAttribute("successMessage", "");
-		 m.addAttribute("invalidMssg", "");
-		 m.addAttribute("invalidMssg1", "");
 		 m.addAttribute("invalidMessage", "");
 		 if(br.hasErrors()) {
 			 
@@ -224,7 +222,7 @@ public class CustomerController {
 			 if(invalidMessage == null) {
 				 customerdao.add(customer);
 				 String emailContent = emaildao.successRegistration(customer);
-				 //emaildao.sendMessage(customer.getEmail(),"Welcome to Prodexa", emailContent);
+				 emaildao.sendMessage(customer.getEmail(),"Welcome to Prodexa", emailContent);
 				 rediAttrs.addFlashAttribute("successMessage", "You have registered successfully!");
 			 }
 			 else {
