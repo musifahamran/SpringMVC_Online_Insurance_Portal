@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
-<title>Purchase Policy</title>
+<title>Add Policy</title>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 <style>
 body {
 	margin:  0;
@@ -17,6 +15,7 @@ body {
 .page-content {
 	width: 100%;
 	margin:  0 auto;
+	background: #75e2e9;
 	display: flex;
 	display: -webkit-flex;
 	justify-content: center;
@@ -29,10 +28,9 @@ body {
 	-ms-align-items: center;
 	-moz-align-items: center;
 	-webkit-align-items: center;
-    background-image: url('resources/image/background/light_green.webp');
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-  background-size: cover;
+	background-image: -moz-linear-gradient( 136deg, rgb(149,153,226) 0%, rgb(139,198,236) 100%);
+    background-image: -webkit-linear-gradient( 136deg, rgb(149,153,226) 0%, rgb(139,198,236) 100%);
+    background-image: -ms-linear-gradient( 136deg, rgb(149,153,226) 0%, rgb(139,198,236) 100%);
 }
 .form-v10-content  {
 	background: #fff;
@@ -69,11 +67,11 @@ body {
 	width: 100%;
 }
 .form-v10-content .form-detail .form-left h2{
-	color: #2a5453;
+	color: #2271dd;
 }
 .form-v10-content .form-detail .form-right {
 	width: 100%;
-	background: #2a5453;
+	background: #1A374D;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
@@ -252,7 +250,7 @@ body {
     padding-left: 60px;
     margin: 44px 0 10px;
 }
-.form-v10-content .form-detail .form-right .register {
+.form-v10-content .form-detail .form-right .update {
 	background: #fff;
 	border-radius: 25px;
 	-o-border-radius: 25px;
@@ -265,6 +263,7 @@ body {
 	-moz-box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
 	-webkit-box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
 	width: 180px;
+	height:40px;
 	border: none;
 	margin: 6px 0 50px 0px;
 	cursor: pointer;
@@ -272,7 +271,7 @@ body {
 	font-weight: 700;
 	font-size: 15px;
 }
-.form-v10-content .form-detail .form-right .register:hover {
+.form-v10-content .form-detail .form-right .update:hover {
 	background: #ccc;
 }
 .form-v10-content .form-detail .form-right .form-row-last input {
@@ -310,10 +309,7 @@ body {
   color: #f2f2f2;
   font-size: 16px;
 }
-option { 
-    background: white;
-    color:black;
-}
+
 /* Responsive */
 @media screen and (max-width: 1199px) {
 	.form-v10-content {
@@ -399,218 +395,124 @@ option {
 	}
 }
 </style>
-
-<script type="text/javascript">
-function populate(type,name){
-	var type = parseInt(document.getElementById(type).value);
-	var name = document.getElementById(name);
-	var policyplanID =  document.getElementById("policyPlan");
-	var rate = document.getElementById("plan_rate");
-	var coverage = document.getElementById("plan_coverage");
-	var duration = document.getElementById("plan_duration");
-	var addCharge = document.getElementById("plan_addCharge");
-	var policyprice = document.getElementById("policy_price");
-	var policydesc = document.getElementById("policy_description");
-	policyplanID = "Select Plan";
-	var optionArray = [];
-	name.innerHTML = "";
-	policyprice.value="";
-	policyprice.placholder = "Price";
-	policydesc.value="";
-	policydesc.innerHTML = "";
-	rate.value="";
-	rate.placeholder="Rate (%)";
-	coverage.value="";
-	coverage.placeholder="Coverage";
-	duration.value="";
-	duration.placeholder = "Duration (Year)";
-	addCharge.value="";
-	addCharge.placeholder="Additional Charge";
-	
-	optionArray.push("None | Policy Name" );
-	<c:forEach var="list" items="${policyList}">
-		if(type == ${list.getPol_type_id().getPolicyTypeID()}){
-			optionArray.push("${list.getPolicy_id()}|${list.getName()}" );
-		}
-	</c:forEach>
-	
-	for(var option in optionArray){
-		var pair = optionArray[option].split("|");
-		var newOption = document.createElement("option");
-		newOption.value = pair[0];
-		newOption.innerHTML = pair[1];
-		name.options.add(newOption);
-	}
-	policyplanID.selectedIndex=0;
-	
-}
-function setPolicyDetail(){
-	var policyname = parseInt(document.getElementById("policyName").value);
-	var policyprice = document.getElementById("policy_price");
-	var policydesc = document.getElementById("policy_description");
-	var rate = document.getElementById("plan_rate");
-	var coverage = document.getElementById("plan_coverage");
-	var duration = document.getElementById("plan_duration");
-	var addCharge = document.getElementById("plan_addCharge");
-	var policyplanID =  document.getElementById("policyPlan");
-		<c:forEach var="list" items="${policyList}">
-		if(policyname == ${list.getPolicy_id()}){
-			policyprice.value = "${list.getPrice()}";
-			policydesc.value = "${list.getDescription()}";
-		}
-		</c:forEach>
-		
-		rate.value="";
-		rate.placeholder="Rate (%)";
-		coverage.value="";
-		coverage.placeholder="Coverage";
-		duration.value="";
-		duration.placeholder = "Duration (Year)";
-		addCharge.value="";
-		addCharge.placeholder="Additional Charge";
-		policyplanID.selectedIndex=0;
-	
-}
-function getPlanDetails(){
-	var policyID = parseInt(document.getElementById("policyName").value);
-	var policyplanID =  parseInt(document.getElementById("policyPlan").value);
-	var rate = document.getElementById("plan_rate");
-	var coverage = document.getElementById("plan_coverage");
-	var duration = document.getElementById("plan_duration");
-	var addCharge = document.getElementById("plan_addCharge");
-	<c:forEach var="list" items="${policyList}">
-	if(policyID == ${list.getPolicy_id()}){
-		if(policyplanID==0){
-			rate.value = "${list.getPlan().get(0).getRate()}";
-			coverage.value = "${list.getPlan().get(0).getCoverage()}";
-			duration.value = "${list.getPlan().get(0).getDuration()}";
-			addCharge.value = "${list.getPlan().get(0).getAdditional_charge()}";
-		}
-		else if(policyplanID==1){
-			rate.value = "${list.getPlan().get(1).getRate()}";
-			coverage.value = "${list.getPlan().get(1).getCoverage()}";
-			duration.value = "${list.getPlan().get(1).getDuration()}";
-			addCharge.value = "${list.getPlan().get(1).getAdditional_charge()}";
-		}
-		
-	}
-	</c:forEach>
-}
-</script>
 <section class="form-v10">
 <div class="page-content">
 		<div class="form-v10-content">
-			<form:form class="form-detail needs-validation" action="buy-policy" method="post" id="myform" modelAttribute="policy" novalidate="true">
+			<form:form class="form-detail needs-validation" action="update-current-policy" method="post" id="myform" modelAttribute="policy" novalidate="true">
 				<div class="form-left">
-					<h2>Available Policy</h2>
+					<h2>Policy Information</h2>
 					<div class="form-row">
-							<form:select path="pol_type_id" name="type" id="type" onChange="populate(this.id,'policyName')" required="required"> 
-						   	<form:option value="" label="Select Policy Type" hidden="true" disabled="true" selected="true"/>
-						   	<c:forEach var="list" items="${policyTypes}">
-						   	<c:if test="${list.getPolicyCategory() == customerType}">
-	        					<form:option id="${list.getPolicyTypeID()}" value="${list.getPolicyTypeID()}">${list.getType()}</form:option>
-	        				</c:if>
-	    					</c:forEach>
-							</form:select>
-							<span class="select-btn">
-							  	<i class="fa fa-caret-down"></i>
-							</span>
-							<div class="invalid-feedback">
-			        			Please select policy type.
-			      			</div>
-
+					<label>Policy ID</label>
+					<input type="text" name="policy_id" id="policy_id" class="input-text" placeholder="Policy ID" value="${currPolicy.getPolicy_id()}" readonly>	
 					</div>
 					<div class="form-row">
-						<select id="policyName" name="policyName" onChange="setPolicyDetail()" required>
-						<option value="" hidden="true" disabled selected>Please select policy type to view policies</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="fa fa-caret-down"></i>
-						</span>	
-						<div class="invalid-feedback">
-		        			Please select policy name.
-		      				</div>
+					<input type="text" name="policy_name" id="policy_name" class="input-text" placeholder="Policy Name" value="${currPolicy.getName()}"required>	
+					<div class="invalid-feedback">
+			        Please enter policy name.
+			      	</div>
 					</div>
-					
 					<div class="form-group">
 						<div class="form-row">
-					<input  type="text" name="policy_price" id="policy_price" class="input-text" placeholder="Price" readonly>
+					<input type="text" name="policy_price" id="policy_price" class="input-text" placeholder="Price" value="${currPolicy.getPrice()}" required>	
+					<div class="invalid-feedback">
+				     Please enter policy price.
+				     </div>
 					</div>
+					</div>
+					<div class="form-row">
+						<form:select path="pol_type_id" name="type" required="required"> 
+					   	<form:option value="" selected="true" hidden="true" label="${currPolicy.getPol_type_id().getType()}"/>
+   						<form:options items="${policyTypeList}" />
+						</form:select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+						<div class="invalid-feedback">
+				        Please select policy category.
+				      	</div>
 					</div>
 					<div class="form-row">
 						 <label for="exampleFormControlTextarea1" class="form-label">Policy Description</label>
-		  				<textarea class="form-control" name="policy_description"id="policy_description" rows="10" readonly></textarea>
+		  				<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="5" required>${currPolicy.getDescription()}</textarea>
+					<div class="invalid-feedback">
+			        Please enter policy description.
+			      	</div>
 					</div>
 				</div>
 				<div class="form-right">
 					<h2>Policy Plans</h2>
 					<div class="form-row">
-						<select name="policyPlan" class="policyPlan" id="policyPlan"onChange="getPlanDetails()" required>
-						    <option value="" hidden="true" disabled selected>Policy Plan</option>
-						    <option value="0" style="background-color:white;">Basic</option>
-						    <option value="1" style="background-color:white;">Premium</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="fa fa-caret-down"></i>
-						</span>	
+					<h6>Basic Plan</h6>
+						<input type="text" name="baseRate" class="street" id="street" placeholder="Rate (%)" value="${currPolicy.getPlan().get(0).getRate()}" required>
 						<div class="invalid-feedback">
-		        			Please select policy plan.
-		      			</div>
+				        Please enter rate for basic plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="plan_rate" class="plan_rate" id="plan_rate" placeholder="Rate (%)" readonly>
+						<input type="text" name="baseCoverage" class="additional" id="additional" placeholder="Coverage" value="${currPolicy.getPlan().get(0).getCoverage()}" required>
+						<div class="invalid-feedback">
+				        Please enter coverage for basic plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="plan_coverage" class="plan_coverage" id="plan_coverage" placeholder="Coverage" readonly>
+						<input type="text" name="baseDuration" class="street" id="street" placeholder="Duration (Year)" value="${currPolicy.getPlan().get(0).getDuration()}" required>
+						<div class="invalid-feedback">
+				        Please enter duration for basic plan.
+				      	</div>
+					</div>
+					
+					<div class="form-row">
+						<h6>Premium Plan</h6>
+						<input type="text" name="premiumRate" class="street" id="street" placeholder="Rate (%)" value="${currPolicy.getPlan().get(1).getRate()}"required>
+						<div class="invalid-feedback">
+				        Please enter rate for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="plan_duration" class="plan_duration" id="plan_duration" placeholder="Duration (Year)" readonly>
+						<input type="text" name="premiumCoverage" class="additional" id="additional" placeholder="Coverage" value="${currPolicy.getPlan().get(1).getCoverage()}" required>
+						<div class="invalid-feedback">
+				        Please enter coverage for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="plan_addCharge" class="plan_addCharge" id="plan_addCharge" placeholder="Additional Charge" readonly>
+						<input type="text" name="premiumDuration" class="street" id="street" placeholder="Duration (Year)" value="${currPolicy.getPlan().get(1).getDuration()}" required>
+						<div class="invalid-feedback">
+				        Please enter duration for premium plan.
+				      	</div>
+					</div>
+					<div class="form-row">
+						<input type="text" name="premiumCharge" class="street" id="street" placeholder="Additional Charge" value="${currPolicy.getPlan().get(1).getAdditional_charge()}"required>
+						<div class="invalid-feedback">
+				        Please enter additional charge for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row-last">
-						<input type="submit" name="register" class="register py-2" value="Purchase" style="display:block;float:left">
-						<a href="<c:url value="/my-policy"/>" class="btn register py-2" style="display:block;float:left">Cancel</a>
+					<div class="col">
+					<input type="submit" name="update" class="update py-2" style="display:block;float:left" value="Update Policy">	
+					<a href="<c:url value="/update-policy" />" class="btn update py-2" style="display:block;float:left">Cancel</a>
 					</div>
 				</div>
 			</form:form>
-			   <div class="toast" id="myToast" style=" background-color:#ffe9ec;position: absolute; top: 10px; left: 35%;" data-delay="5000">
-				    <div class="toast-header">
-				        <strong class="me-auto"> You have purchased a policy!</strong>
-				        <small></small>
-				        <button type="button" class="btn-close" data-dismiss="toast"></button>
-				    </div>
-				    <div class="toast-body">
-				      <p>${successMessage}</p>
-				    </div>
-				</div>
-		  <script>
-		  <c:if test="${!empty successMessage}">
-		  		$("#myToast").toast("show");
-		  </c:if>
-		  </script>
-				<script>
-						(function () {
-							  'use strict'
-						
-							  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-							  var forms = document.querySelectorAll('.needs-validation')
-						
-							  // Loop over them and prevent submission
-							  Array.prototype.slice.call(forms)
-							    .forEach(function (form) {
-							      form.addEventListener('submit', function (event) {
-							        if (!form.checkValidity()) {
-							          event.preventDefault()
-							          event.stopPropagation()
-							        }
-						
-							        form.classList.add('was-validated')
-							      }, false)
-							    })
-							})()
-					</script>
+			<script>
+			(() => {
+				  'use strict'
+			
+				  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+				  const forms = document.querySelectorAll('.needs-validation')
+			
+				  // Loop over them and prevent submission
+				  Array.from(forms).forEach(form => {
+				    form.addEventListener('submit', event => {
+				      if (!form.checkValidity()) {
+				        event.preventDefault()
+				        event.stopPropagation()
+				      }
+			
+				      form.classList.add('was-validated')
+				    }, false)
+				  })
+				})()
+		</script>
 		</div>
 	</div>
 	</section>

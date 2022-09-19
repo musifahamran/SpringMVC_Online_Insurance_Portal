@@ -29,6 +29,8 @@ public class PolicyPlan {
 	private double additional_charge;
 	
 	@Column
+	private String plan_type;
+	
 	public int getPlan_id() {
 		return plan_id;
 	}
@@ -68,5 +70,14 @@ public class PolicyPlan {
 	public void setAdditional_charge(double additional_charge) {
 		this.additional_charge = additional_charge;
 	}
+
+	public String getPlan_type() {
+		return plan_type;
+	}
+
+	public void setPlan_type(String plan_type) {
+		this.plan_type = plan_type;
+	}
+	
 
 }

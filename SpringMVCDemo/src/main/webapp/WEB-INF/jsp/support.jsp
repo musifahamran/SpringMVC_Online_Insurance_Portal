@@ -12,6 +12,9 @@
 .container{
 padding:0px 300px;
 }
+body{
+	background: linear-gradient(331deg, rgba(245,255,167,0.8524452017134979) 35%, rgba(238,220,173,0.7768149496126575) 54%);
+}
 </style>
 </head>
 <body>
@@ -23,13 +26,13 @@ padding:0px 300px;
  	</div>
  	<br>
  	<br>
- 	<div class="row" style="width:95%;">
+ 	<div class="row">
  	<div class="mx-auto order-0">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs justify-content-center" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tab" href="#contact" aria-controls="contact" aria-selected="true">Call us</a></li>
-                <li class="nav-item"><a class="nav-link"  data-toggle="tab" role="tab" href="#location" aria-controls="location" aria-selected="false">Visit Us</a></li>
-                <li class="nav-item"><a class="nav-link"  data-toggle="tab" role="tab" href="#feedback" aria-controls="feedback" aria-selected="false">Feedback</a></li>
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tab" href="#contact" aria-controls="contact" aria-selected="true" style="color:black;">Call us</a></li>
+                <li class="nav-item"><a class="nav-link"  data-toggle="tab" role="tab" href="#location" aria-controls="location" aria-selected="false" style="color:black;">Visit Us</a></li>
+                <li class="nav-item"><a class="nav-link"  data-toggle="tab" role="tab" href="#feedback" aria-controls="feedback" aria-selected="false" style="color:black;">Feedback</a></li>
       </ul>
 
 	<!-- Tab panes -->
@@ -74,10 +77,9 @@ padding:0px 300px;
 	  </div>  
 	  </div>
 	  </div>
-	  <div class="tab-pane justify-content-center" id="feedback" role="tabpanel" aria-labelledby="messages-tab" style="width:40%;">
-	   <div class="container">
+	  <div class="tab-pane justify-content-center mx-auto px-5" id="feedback" role="tabpanel" aria-labelledby="messages-tab" style="width:40%;">
 	   <div class="col">
-	  <div class="mb-3" >
+	   <div class="mb-3">
 		<label for="exampleFormControlInput1" class="form-label">Email address</label>
 		  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
 		</div>
@@ -89,7 +91,7 @@ padding:0px 300px;
 	    	<button type="submit" class="btn btn-primary mb-3">Submit</button>
 	  		</div>
 	  </div>
-	  </div>
+
 	</div>
 	</div>
  	</div>

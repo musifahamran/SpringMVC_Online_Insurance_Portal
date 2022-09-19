@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
 <title>Add Policy</title>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 <style>
 body {
 	margin:  0;
@@ -248,7 +251,7 @@ body {
     padding-left: 60px;
     margin: 44px 0 10px;
 }
-.form-v10-content .form-detail .form-right .register {
+.form-v10-content .form-detail .form-right .add {
 	background: #fff;
 	border-radius: 25px;
 	-o-border-radius: 25px;
@@ -262,13 +265,14 @@ body {
 	-webkit-box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
 	width: 180px;
 	border: none;
+	height:40px;
 	margin: 6px 0 50px 0px;
 	cursor: pointer;
 	color: #333;
 	font-weight: 700;
 	font-size: 15px;
 }
-.form-v10-content .form-detail .form-right .register:hover {
+.form-v10-content .form-detail .form-right .add:hover {
 	background: #ccc;
 }
 .form-v10-content .form-detail .form-right .form-row-last input {
@@ -395,68 +399,135 @@ body {
 <section class="form-v10">
 <div class="page-content">
 		<div class="form-v10-content">
-			<form class="form-detail" action="#" method="post" id="myform">
+			<form:form class="form-detail needs-validation" action="add-new-policy" method="post" id="myform" modelAttribute="policy" novalidate="true">
 				<div class="form-left">
 					<h2>Policy Information</h2>
 					<div class="form-row">
-					<input type="text" name="policy_name" id="policy_name" class="input-text" placeholder="Policy Name" required>	
+					<input type="text" name="policy_name" id="policy_name" class="input-text" placeholder="Policy Name" required>
+					<div class="invalid-feedback">
+			        Please enter policy name.
+			      	</div>	
 					</div>
 					<div class="form-group">
 						<div class="form-row">
-					<input type="text" name="policy_price" id="policy_price" class="input-text" placeholder="Price" required>	
+					<input type="text" name="policy_price" id="policy_price" class="input-text" placeholder="Price" required>
+					<div class="invalid-feedback">
+			        Please enter policy price.
+			      	</div>	
 					</div>
 					</div>
 					<div class="form-row">
-						<select name="policyType">
-						    <option value="0">Policy Type</option>
-						    <option value="life">Life</option>
-						    <option value="health">Health</option>
-						    <option value="vehicle">Vehicle</option>
-						    <option value="travel">Travel</option>
-						    <option value="school">School</option>
-						    <option value="commercial">Commercial</option>
-						</select>
+						<form:select path="pol_type_id" name="type" required="required"> 
+					   	<form:option disabled="true" selected="true" hidden="true" value="" label="Select Policy Type"/>
+   						<form:options items="${policyTypeList}" />
+						</form:select>
+						<form:errors path="pol_type_id" cssClass="error"/>
 						<span class="select-btn">
 						  	<i class="zmdi zmdi-chevron-down"></i>
 						</span>
+						<div class="invalid-feedback">
+					        Please select policy category.
+					      	</div>
 					</div>
 					<div class="form-row">
 						 <label for="exampleFormControlTextarea1" class="form-label">Policy Description</label>
-		  				<textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+		  				<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="10" required></textarea>
+		  				<div class="invalid-feedback">
+					        Please enter description of new policy.
+					      	</div>
 					</div>
 				</div>
 				<div class="form-right">
 					<h2>Policy Plans</h2>
-					<h6>Basic Plan</h6>
 					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Rate (%)" required>
+					 <h6>Basic Plan</h6>
+						<input type="text" name="baseRate" class="street" id="street" placeholder="Rate (%)" required>
+						<div class="invalid-feedback">
+				        Please enter rate for basic plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="additional" class="additional" id="additional" placeholder="Coverage" required>
+						<input type="text" name="baseCoverage" class="additional" id="additional" placeholder="Coverage" required>
+						<div class="invalid-feedback">
+				        Please enter coverage for basic plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Duration (Year)" required>
+						<input type="text" name="baseDuration" class="street" id="street" placeholder="Duration (Year)" required>
+						<div class="invalid-feedback">
+				        Please enter duration for basic plan.
+				      	</div>
 					</div>
-					
+					<br>
+					<div class="form-row">
 					<h6>Premium Plan</h6>
-					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Rate (%)" required>
+						<input type="text" name="premiumRate" class="street" id="street" placeholder="Rate (%)" required>
+						<div class="invalid-feedback">
+				        Please enter rate for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="additional" class="additional" id="additional" placeholder="Coverage" required>
+						<input type="text" name="premiumCoverage" class="additional" id="additional" placeholder="Coverage" required>
+						<div class="invalid-feedback">
+				        Please enter coverage for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Duration (Year)" required>
+						<input type="text" name="premiumDuration" class="street" id="street" placeholder="Duration (Year)" required>
+						<div class="invalid-feedback">
+				        Please enter duration for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Additional Charge" required>
+						<input type="text" name="premiumCharge" class="street" id="street" placeholder="Additional Charge" required>
+						<div class="invalid-feedback">
+				        Please enter additional charge for premium plan.
+				      	</div>
 					</div>
 					<div class="form-row-last">
-						<input type="submit" name="register" class="register" value="Add Policy">
+						<input type="submit" name="add" class="add py-2" style="display:block;float:left" value="Add Policy">
+						<a href="<c:url value="/update-policy"/>" class="btn add py-2" style="display:block;float:left">Cancel</a>
 					</div>
 				</div>
-			</form>
+			</form:form>
+			 <span style="color:red;"id="message">${message}</span>
+			<div class="toast" id="myToast" style="background-color:#ffe9ec;position: absolute; top: 10px; left: 35%;" data-delay="5000">
+				    <div class="toast-header">
+				        <strong class="me-auto"> ${successMessage}</strong>
+				        <small></small>
+				        <button type="button" class="btn-close" data-dismiss="toast"></button>
+				    </div>
+				    <div class="toast-body">
+				      <p>You can  <a href="update-policy">click here</a> to view all your policies.</p>
+				    </div>
+				</div>
+		  <script>
+		  <c:if test="${!empty successMessage}">
+		  		$("#myToast").toast("show");
+		  </c:if>
+		  </script>
 		</div>
 	</div>
+	<script>
+						(function () {
+							  'use strict'
+						
+							  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+							  var forms = document.querySelectorAll('.needs-validation')
+						
+							  // Loop over them and prevent submission
+							  Array.prototype.slice.call(forms)
+							    .forEach(function (form) {
+							      form.addEventListener('submit', function (event) {
+							        if (!form.checkValidity()) {
+							          event.preventDefault()
+							          event.stopPropagation()
+							        }
+						
+							        form.classList.add('was-validated')
+							      }, false)
+							    })
+							})()
+					</script>
 	</section>
 </html>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
-      <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+       <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,14 +23,9 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
 </head>
 <body>
 <section style="background-color: #eee;">
+<form:form class="form-detail needs-validation" action="update-profile" method="post" id="myform" novalidate="true" modelAttribute="adminModel">
   <div class="container py-5">
     <div class="row">
-    <c:if test="${!empty updateMessage}">
-				 <div class="alert  alert-primary alert-dismissible fade show" role="alert">
-				 	<strong align="center">${updateMessage}</strong>
-				 	<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-				 </div>
-				 </c:if>
       <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
@@ -49,7 +44,8 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
             
             <p class="text-muted mb-1">Admin</p>
             <div class="d-flex justify-content-center mb-2">
-             <a href="edit-profile" class="btn btn-primary" role="button">Edit Profile</a>
+             	<input type="submit" name="updateProfile" class="btn btn-primary" value="Update Profile">
+              <a href="view-profile" class="btn btn-secondary" role="button">Cancel</a>
             </div>
           </div>
         </div>
@@ -62,16 +58,29 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">User Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getUsername()}</p>
+              <p class="text-muted mb-0">${adminUser.getUsername()}</p>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Full Name</p>
+                <p class="mb-0">First Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getFname()} <% out.println(" "); %> ${adminUser.getLname()}</p>
+              <div class="row">
+               <div class="col">
+                <input type="text" name="admin_fname" id="admin_fname" class="form-input" value="${adminUser.getFname()}" required>	
+                <div class="invalid-feedback">
+				    Please enter your first name.
+				</div>
+              </div>
+              <div class="col ">
+                Last Name <input type="text" name="admin_lname" id="admin_lname" class="form-input" value="${adminUser.getLname()}" required>
+                <div class="invalid-feedback">
+				    Please enter your last name.
+				</div>	
+              </div>
+              </div>
               </div>
             </div>
             <hr>
@@ -80,7 +89,8 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getEmail()}</p>
+             <p class="text-muted mb-0"></p>
+              <input type="text" id="admin_email" name="admin_email" style="border: none;" value="${adminUser.getEmail()}" readonly>
               </div>
             </div>
             <hr>
@@ -89,7 +99,7 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Phone</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getContactNo()}</p>
+             <input type="text" id="admin_contactNo" name="admin_contactNo" style="border: none;" value="${adminUser.getContactNo()}" readonly>
               </div>
             </div>
             <hr>
@@ -98,14 +108,40 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Address</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getAddress()}</p>
+              <input type="text" name="admin_address" id="admin_address" class="input-text" placeholder="Enter address" value="${adminUser.getAddress()}" required>	
+              <div class="invalid-feedback">
+				 Please enter your address.
+				</div>
               </div>
             </div>
           </div>
         </div>
+    
       </div>
     </div>
   </div>
+  </form:form>
+  	<script>
+						(function () {
+							  'use strict'
+						
+							  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+							  var forms = document.querySelectorAll('.needs-validation')
+						
+							  // Loop over them and prevent submission
+							  Array.prototype.slice.call(forms)
+							    .forEach(function (form) {
+							      form.addEventListener('submit', function (event) {
+							        if (!form.checkValidity()) {
+							          event.preventDefault()
+							          event.stopPropagation()
+							        }
+						
+							        form.classList.add('was-validated')
+							      }, false)
+							    })
+							})()
+					</script>
 </section>
 </body>
 </html>

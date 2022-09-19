@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 <style>
 
 /* ==========================================================================
@@ -702,8 +707,75 @@ textarea {
     padding: 50px 30px;
   }
 }
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.card-title{
+    font-size:19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.card-text{
+    font-size:16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 </style>
+<script>
+function populate(type,name){
+	var policytype = parseInt(document.getElementById(type).value);
+	var policyname = document.getElementById(name);
+	var optionArray = [];
+	policyName.innerHTML = "";
+	
+	<c:forEach var="list" items="${customerObj.getCustomerpolicy()}">
+		if(policytype == ${list.getPolicy().getPol_type_id().getPolicyTypeID()}){
+			<c:if test="${list.getActivePolicy() == 'Approved'}">
+				optionArray.push("${list.getPolicy().getPolicy_id()}|${list.getPolicy().getName()}" );
+			</c:if>
+		}
+	</c:forEach>
+	
+	for(var option in optionArray){
+		var pair = optionArray[option].split("|");
+		var newOption = document.createElement("option");
+		newOption.value = pair[0];
+		newOption.innerHTML = pair[1];
+		policyname.options.add(newOption);
+	}
+	
+}
+function preview_images() 
+{
+ var total_file=document.getElementById("file").files.length;
+ for(var i=0;i<total_file;i++)
+ {
+	 var path = URL.createObjectURL(event.target.files[i]);
+	 var objectName = path.split('/');
+  $('#image_preview').append("<div class='col-md-3'><input class='image-responsive' value='"+objectName[ objectName.length-1 ]+"'></div>");
+ }
+}
+</script>
+<section class="table-responsive-sm" style="width:80%; margin:0 auto;">
+<c:choose>
+<c:when test="${empty customerObj.getCustomerpolicy() || empty policyCatList}">
+ <h5 class="display-6 py-5 fw-bold" align="center">Welcome to the Claims Application page!</h5>
+ <div class="card" align="center" style="width: 100%;">
+	  <div class="card-body">
+	    <h5 class="card-title">Here you can apply claims for the policy you have purchased!</h5>
+	    <h6 class="card-subtitle mb-2 text-muted"></h6>
+	    <p class="card-text"><br>However, it seems that you hold no policy at the moment.<br> Click on the below link to buy our policies and kindly wait for response form our Agent on you policy.</p>
+	    <br><a href="<c:url value="/purchase-policy" />" class="btn btn-primary card-link">Buy Policy</a>
+	  </div>
+	</div>
+	<br>
+	<section><br><br><br><br><br><br></section>
+</c:when>
+<c:otherwise>
+ <form:form method="POST" action="submit-claim" modelAttribute="claim" enctype="multipart/form-data" class="needs-validation" novalidate="true">
   <div class="page-wrapper p-t-100 p-b-50">
         <div class="wrapper wrapper--w900">
             <div class="card card-6 border-0">
@@ -711,22 +783,25 @@ textarea {
                     <h2 class="title">Claim Application</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                   
                         <div class="form-row">
                             <div class="name">Claim Type</div>
                             <div class="value">
-                                 <select name="policyType">
-								   <option value="0">Policy Type</option>
-								    <option value="life">Life</option>
-								    <option value="health">Health</option>
-								    <option value="vehicle">Vehicle</option>
-								    <option value="travel">Travel</option>
-								    <option value="school">School</option>
-								    <option value="commercial">Commercial</option>
-								</select>
-								<span class="select-btn">
-								  	<i class="zmdi zmdi-chevron-down"></i>
-								</span>
+                            	<c:if test="${!empty customerObj.getCustomerpolicy()}">
+                            	
+                               <form:select path="type" class="form-control" id="policyType" name="policyType" onChange="populate('policyType', 'policyName')" required="required">
+								   <option value="" hidden="true" selected>Policy Type</option>
+                             	
+           							<c:forEach items="${policyCatList}" var="policy">
+           							<option value="${policy.getPolicyTypeID()}">${policy.getType()}</option>
+           							</c:forEach>
+           							</form:select>
+           							<div class="invalid-feedback">
+							        Please select policy category.
+							      	</div>
+								</c:if>
+
+								
                             </div>
                         </div>
                         <div class="form-row">
@@ -734,51 +809,132 @@ textarea {
                             <div class="col">
                             <div class="value">
                                 <div class="input-group">
-                                     <select name="policyType">
-								    <option value="0">Policy</option>
-								    <option value="life">Life - Fixed Term</option>
-								    <option value="health">Health - HealthShield</option>
-								    <option value="health">Health - HospitalCare</option>
-								    <option value="vehicle">Vehicle - Car Insurance</option>
-								    <option value="travel">Travel</option>
-								    <option value="school">School</option>
-								    <option value="commercial">Commercial - Personal Event</option>
-								</select>
-								<span class="select-btn">
-								  	<i class="zmdi zmdi-chevron-down"></i>
-								</span>
+                                    <form:select path="claim_policy" class="form-control" name="policyName" id="policyName" required="required">
+                                    <option value="" hidden="true" selected>Select Claim type first</option>
+									</form:select>
+								<div class="invalid-feedback">
+							        Please select your policy.
+							      	</div>
                                 </div>
                             </div>
                             </div>
-                            <div class="col">
-                             <button class="btn btn--blue-2" type="submit">View my plan</button>
+                        </div>
+                          <div class="form-row">
+                            <div class="name">Incident Date</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <form:input path="incidentDate" class="form-control date" name="incidentDate" type="date" required="required"/>
+                                    <div class="invalid-feedback">
+							        Please enter the estimated incident date.
+							      	</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="name">Description</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <textarea class="textarea--style-6" name="message" placeholder="Description of incident"></textarea>
+                                    <form:textarea path="description" class="form-control" rows="5" cols="30" id ="claimDescription" name="claimDescription" placeholder="Description of incident" required="required"/>
+                                <div class="invalid-feedback">
+						        Please enter a short description of the incident.
+						      	</div>
                                 </div>
                             </div>
+                        </div>
+                            <div class="form-row">
+                        <div class="name">Required Documents for Submission: </div>
+                        <div class="col"><a href="#documentInfo_<%=request.getParameter("policyName")%>" class="btn btn-info" data-toggle="modal">View Required Documents</a></div>
                         </div>
                         <div class="form-row">
                             <div class="name">Upload Documents</div>
                             <div class="value">
                                 <div class="input-group js-input-file">
-                                    <input class="input-file" type="file" name="file_cv" id="file">
-                                    <label class="label--file" for="file">Choose file</label>
-                                    <span class="input-file__info">No file chosen</span>
+                                    <input class="form-control" type="file" name="file[]" id="file" data-show-caption="true" data-show-upload="false" onchange="preview_images();" multiple/>
                                 </div>
-                                <div class="label--desc">Upload your documents. Max file size 50 MB</div>
+                                 <div class="row" id="image_preview"></div>
+                                <div class="label--desc">Please upload your documents all at once. Multiple selection is allowed</div> 
+                                <div class="label--desc">Max file size 50 MB</div>
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
                 <div class="card-footer">
                     <button class="btn btn--radius-2 btn--blue-2" type="submit">Submit Application</button>
                 </div>
+             
             </div>
         </div>
     </div>
+       </form:form>
+            <div class="modal fade" id="documentInfo_<%=request.getParameter("policyName") %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				   <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Documents for submission</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				     
+				      <div class="modal-body">
+					      <div class="container">
+					      <c:forEach var="list" items="${customerObj.getCustomerpolicy()}">
+							<c:if test="${list.getPolicy().getPolicy_id() == request.getParameter(\"policyName\")}">
+					      	<div class="row">
+					      	<p>Medical report from doctor if any</p>
+					      	</div>
+					      	</c:if>
+					      	
+					      	<c:if test="${list.getPolicy().getName() == 'Car Insurance'}">
+					      	<div class="row">
+					      	<h4>Car/Motor Insurance</h4>
+					      	<p>
+								Documents required<br>
+								Upload a copy of your driving license and Identification document<br>
+								Any media of the occurred accident<br>
+								Police report if any<br>
+								Medical reports if any</p>
+					      	<hr>
+					      	</div>
+					      	</c:if>
+					      	<c:if test="${list.getPolicy().getName() == 'HealthShield'}">
+					      	<div class="row">
+					      	<h4>Health Shield</h4>
+					      	<p>Original final hospital/medical bills and receipts<br>Hospital discharge summary<br>Medical reports if anyMedical report from doctor if any</p>
+					      	<hr>
+					      	</div>
+					      	</c:if>
+					      	</c:forEach>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				  </div>
+				  </div>
+				  	<script>
+						(function () {
+							  'use strict'
+						
+							  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+							  var forms = document.querySelectorAll('.needs-validation')
+						
+							  // Loop over them and prevent submission
+							  Array.prototype.slice.call(forms)
+							    .forEach(function (form) {
+							      form.addEventListener('submit', function (event) {
+							        if (!form.checkValidity()) {
+							          event.preventDefault()
+							          event.stopPropagation()
+							        }
+						
+							        form.classList.add('was-validated')
+							      }, false)
+							    })
+							})()
+					</script>
+</c:otherwise>
+</c:choose>
+</section>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
+     <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +37,9 @@
     border: 2px solid #0062cc;
     border-top-left-radius: 1.5rem;
     border-bottom-left-radius: 1.5rem;
+}
+.container .toast{
+z-index:1;
 }
 </style>
 </head>  
@@ -137,7 +141,7 @@
                 </div>
  
                 <div class="d-flex justify-content-end pt-3">
-                  <button type="button" class="btn btn-light btn-lg">Clear all</button>
+                  <button type="reset" class="btn btn-light btn-lg">Clear all</button>
                   <input type="submit" value="Register"class="btn btn-warning btn-lg ms-2">
                 </div>
 
@@ -150,6 +154,22 @@
       </div>
     </div>
   </div>
+   <div class="toast" id="myToast" style=" background-color:#ffe9ec;position: absolute; bottom: 10px; right: 10px;" data-autohide="false">
+		    <div class="toast-header">
+		        <strong class="me-auto"> You have registered successfully!</strong>
+		        <small></small>
+		        <button type="button" class="btn-close" data-dismiss="toast"></button>
+		    </div>
+		    <div class="toast-body">
+		       Go to our login page to sign in! <a href="loginform">Click here!</a>
+		       <br> A confirmation email has been sent to the email you signed up.
+		    </div>
+		</div>
+  <script>
+  <c:if test="${!empty successMessage}">
+  		$("#myToast").toast("show");
+  </c:if>
+  </script>
 </section>
 </body>
 </html>

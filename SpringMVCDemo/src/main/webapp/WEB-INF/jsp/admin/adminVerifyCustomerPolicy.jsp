@@ -1,29 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+     <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
-<title>My Policy</title>
-<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<title>Check Customer Policy</title>
 <style>
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-.card {
-        margin: 0 auto; /* Added */
-        float: none; /* Added */
-        margin-bottom: 10px; /* Added */
-        border-style:none;
+body{
+background:#e4ffff;
 }
 </style>
 <br>
 <section class="table-responsive-sm" style="width:80%; margin:0 auto;">
-<br><br><br><br>
+<br>
 <c:choose>
- <c:when test="${empty myPolicy.getCustomerpolicy()}">	
+ <c:when test="${empty customerPolicies.getCustomerpolicy()}">	
 	 <div class="card" align="center" style="width: 100%;">
 	  <div class="card-body">
 	    <h5 class="card-title">Welcome to your policy page! Here you can view all the policies you have purchased!</h5>
@@ -35,43 +26,37 @@
 	<br>
     </c:when>
     <c:otherwise>
-    <h4 class="display-5" align="center">Policy List</h4>
-    	<c:if test="${!empty updateMessage}">
-				 <div class="alert  alert-primary alert-dismissible fade show" role="alert">
-				 	<strong>${updateMessage}</strong>
-				 	<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-				 </div>
-				 </c:if>
+    <h4 class="display-5" align="center">Customer Policy List</h4>
     <br>
-    <table id="myPolicyTable" class="table table-striped table-hover center dataTable" data-page-length="4">
+     <table id="myPolicyTable" class="table table-striped table-hover center dataTable" data-page-length="4">
         <thead class="table-dark">
             <tr>
+             <th scope="col">#</th>
                 <th scope="col">Policy Name</th>
                 <th scope="col">Type</th>
                  <th scope="col">Date of Purchase</th>
                  <th scope="col">End Date of Policy</th>
-                 <th scope="col">Policy Status</th>
-                 <th scope="col">Agent Comment</th>
+                 <th scope="col">Status</th>
                 <th scope="col">Plan</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-           <c:forEach items="${myPolicy.getCustomerpolicy()}" var="policy">
+      <c:forEach items="${customerPolicies.getCustomerpolicy()}" var="policy">
 				<tr>
+				<td>${policy.getCustomerpolicy_id()}</td>
 				<td>${policy.getPolicy().getName()}</td>
 				<td>${policy.getPolicy().getPol_type_id()}</td>
 				<td>${policy.getPurchaseDate()}</td>
 				<td>${policy.getEndDate()}</td>
 				<td>${policy.getActivePolicy()}</td>
-				<td>${policy.getComment()}</td>
 				<td><a href="#plan_detail_${policy.getPolicyplan().getPlan_id()}" class="btn btn-light" data-toggle="modal" value="">${policy.getPolicyplan().getPlan_type()}</a></td>
 				<c:choose>
-				<c:when test="${policy.getActivePolicy() != 'Approved' || policy.getPolicyplan().getPlan_type() == 'Premium'}">
-				<td><input class="btn btn-secondary" type="button" value="Upgrade" disabled></td>
+				<c:when test="${policy.getActivePolicy() == 'Pending'}">
+				<td><a href="#approve_${policy.getCustomerpolicy_id()}" class="btn btn-primary"  data-toggle="modal">Approve Purchase?</a></td>
 				</c:when>
 				 <c:otherwise>
-				 <td><a href="#upgrade_plan_${policy.getCustomerpolicy_id()}" class="btn btn-primary" data-toggle="modal">Upgrade</a></td>
+				 <td>Approved</td>
 				 </c:otherwise>
 				 </c:choose>
 				</tr>
@@ -107,33 +92,56 @@
 				    </div>
 				  </div>
 				  </div>
-				   <div class="modal fade" id="upgrade_plan_${policy.getCustomerpolicy_id()}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-				   <div class="modal-dialog modal-dialog-centered" role="document">
+				   
+				  <div class="modal fade" id="approve_${policy.getCustomerpolicy_id()}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				  	<div class="modal-dialog modal-dialog-centered" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLongTitle">Upgrade Plan</h5>
+				        <h5 class="modal-title" id="exampleModalLongTitle">Approve Customer Purchase?</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
-				     
+				    <form method="post" action="submit/${policy.getCustomerpolicy_id()}">
 				      <div class="modal-body">
 					      <div class="container">
 					      	<div class="row">
-					      	<p>Would you like to upgrade plan to Premium?</p>
+					      	<p>Would you approve customer purchase of this policy?</p>
+					      	</div>
+					      	<div class=row>
+					      	<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="policyApproval" id="inlineRadio1" value="Approved" />
+							  <label class="form-check-label" for="inlineRadio1">Yes</label>
+							</div>
+							
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="policyApproval" id="inlineRadio2" value="Reject" />
+							  <label class="form-check-label" for="inlineRadio2">No</label>
+							</div>
+							
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="policyApproval" id="inlineRadio3" value="Require Further Review"/>
+							  <label class="form-check-label" for="inlineRadio3">Require further review</label>
+							</div>
+					      	 <hr>
+					      	<div class="row">
+					      	<p>Any Comments?</p>
 					      	</div>
 					      	<div class="row">
-					      	<p>You can only upgrade once and will no longer be able to go back to your previous plan till the duration expires.</p>
+					      	<textarea name="comment" rows="5" cols="30"></textarea>
 					      	</div>
 					      </div>
 				      </div>
 				      <div class="modal-footer">
-				        <a href="upgrade-plan/${policy.getCustomerpolicy_id()}" class="btn btn-primary">Yes</a>
-				        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				       	<input type="submit" class="btn btn-primary" value="Submit Response" >
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
+				    </form>
 				  </div>
 				  </div>
+				  </div>
+				    
 			</c:forEach>
         </tbody>
     </table>
@@ -143,7 +151,11 @@ $('#myPolicyTable').DataTable();
 } );
 </script>	
     </c:otherwise>
-    </c:choose>	
+    </c:choose>
+    <div class="container" style="text-align:center;">
+    <a href="<c:url value="/view-customer" />" class="btn btn-secondary py-2" style="width:100px">Back</a>
+    </div>	
     <br><br><br><br><br><br><br><br>
 </section>
+
 </html>

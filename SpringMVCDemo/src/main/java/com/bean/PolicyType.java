@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +19,14 @@ public class PolicyType {
 	
 	@Column
 	private String type;
+	
+	@Column
+	private String policyCategory;
+		
+	public PolicyType() {}
+	public PolicyType(String type) {
+		this.type=type;
+	}
 
 	public int getPolicyTypeID() {
 		return policyTypeID;
@@ -34,6 +43,18 @@ public class PolicyType {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public String getPolicyCategory() {
+		return policyCategory;
+	}
+	public void setPolicyCategory(String policyCategory) {
+		this.policyCategory = policyCategory;
+	}
+	@Override
+	public String toString() {
+		return getType();
+	}
+	
 	
 
 }

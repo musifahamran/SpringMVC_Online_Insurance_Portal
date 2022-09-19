@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    pageEncoding="ISO-8859-1"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
+
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Review Customer Claim</title>
 <style>
+
 /* ==========================================================================
    #FONT
    ========================================================================== */
@@ -201,7 +203,10 @@ body {
   font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
-	background: linear-gradient(331deg, rgba(245,255,167,0.8524452017134979) 35%, rgba(173,238,233,0.6227533249627977) 56%, rgba(192,242,211,1) 79%);
+	background-image: url('resources/image/background/light_green.webp');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+  background-size: cover;
 
 }
 
@@ -402,6 +407,14 @@ h6 {
 .btn--blue {
   background: #4272d7;
 }
+.btn--grey {
+	color:black;
+  background: #c3cde0;
+}
+.btn--grey:hover {
+  background: #ebeef2;
+}
+
 
 .btn--blue:hover {
   background: #3868cd;
@@ -700,70 +713,23 @@ textarea {
     padding: 50px 30px;
   }
 }
-.center {
-  margin-left: auto;
-  margin-right: auto;
+body{
+background-color:powderblue;
 }
-.card-title{
-    font-size:19px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+label {
+cursor: pointer;   
 }
-.card-text{
-    font-size:16px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 </style>
-<script>
-function populate(type,name){
-	var policytype = parseInt(document.getElementById(type).value);
-	var policyname = document.getElementById(name);
-	var optionArray = [];
-	policyName.innerHTML = "";
-	
-	optionArray.push("None | Policy Name" );
-	<c:forEach var="list" items="${customerObj.getCustomerpolicy()}">
-		if(policytype == ${list.getPolicy().getPol_type_id().getPolicyTypeID()}){
-			<c:if test="${list.getActivePolicy() == 'Approved'}">
-				optionArray.push("${list.getPolicy().getPolicy_id()}|${list.getPolicy().getName()}" );
-			</c:if>
-		}
-	</c:forEach>
-	
-	for(var option in optionArray){
-		var pair = optionArray[option].split("|");
-		var newOption = document.createElement("option");
-		newOption.value = pair[0];
-		newOption.innerHTML = pair[1];
-		policyname.options.add(newOption);
-	}
-	
-}
-function preview_images() 
-{
- var total_file=document.getElementById("file").files.length;
- for(var i=0;i<total_file;i++)
- {
-	 var path = URL.createObjectURL(event.target.files[i]);
-	 var objectName = path.split('/');
-  $('#image_preview').append("<div class='col-md-3'><input class='image-responsive' value='"+objectName[ objectName.length-1 ]+"'></div>");
- }
-}
-</script>
-<section class="table-responsive-sm" style="width:80%; margin:0 auto;">
- <form:form method="POST" action="update-claimApp/${currentClaim.getId()}" modelAttribute="claim" enctype="multipart/form-data">
+ <form:form method="POST" action="submit-reviewclaim/${currentClaim.getId()}" modelAttribute="claim" class="needs-validation" novalidate="true">
   <div class="page-wrapper p-t-100 p-b-50">
         <div class="wrapper wrapper--w900">
             <div class="card card-6 border-0">
                 <div class="card-heading">
-                    <h2 class="title">Claim Application</h2>
+                    <h2 class="title">Review Claim Application</h2>
                 </div>
                 <div class="card-body">
                    
-                          <div class="form-row">
+                        <div class="form-row">
                             <div class="name">Claim Type</div>
                             <div class="value">
                             	<input class="form-control" type="text" value="${currentClaim.getType()}" readonly>
@@ -795,35 +761,67 @@ function preview_images()
                                 </div>
                             </div>
                         </div>
+                            <div class="form-row">
+                        <div class="name">Download Documents</div>
+                        <div class="col"><a href="download/${currentClaim.getId()}" class="btn btn-primary" >Download</a></div>
+                        </div>
                         <div class="form-row">
-                            <div class="name">Reviewer Comments</div>
+                            <div class="name">Comments</div>
                             <div class="value">
                                 <div class="input-group js-input-file">
-                                   	<textarea class="form-control" name="comments" id="exampleFormControlTextarea1" rows="5" readonly>${currentClaim.getReviewerComments() }</textarea>
+                                   	<textarea class="form-control" name="comments" id="exampleFormControlTextarea1" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="name">Upload Documents</div>
-                            <div class="value">
-                                <div class="input-group js-input-file">
-                                    <input class="form-control" type="file" name="file[]" id="file" data-show-caption="true" data-show-upload="false" onchange="preview_images();" multiple/>
-                                </div>
-                                 <div class="row" id="image_preview"></div>
-                                <div class="label--desc">Please upload your documents all at once. Multiple selection is allowed</div> 
-                                <div class="label--desc">Max file size 50 MB</div>
-                            </div>
-                        </div>
-                    
+                         <div class="form-row">
+                         <div class="name">Update Claim Status</div>
+                          <div class="value">
+                          <div class="form-check">
+						  <input class="form-check-input" type="radio" name="claimStatus" id="inlineRadio1" value="Approved" required>
+						  <label class="form-check-label" for="inlineRadio1" style="color:green;">Approve</label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="claimStatus" id="inlineRadio2" value="Reject" required>
+						  <label class="form-check-label" for="inlineRadio2" style="color:red;">Reject</label>
+						  </div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="claimStatus" id="inlineRadio3" value="In progress" required>
+						  <label class="form-check-label" for="inlineRadio3" style="color:#947c06;">In progress</label>
+						<div class="invalid-feedback">
+					      	Please select update status for claim.
+					    </div>
+					    </div>
+					    </div>
+                    </div>
                 </div>
-                <div class="card-footer">            	
-                    <button class="btn btn--radius-2 btn--blue-2" type="submit">Update Application</button>
-                    <a href="<c:url value="/my-claim" />" class="btn btn--radius-2 btn-secondary">Cancel</a>
+                <div class="card-footer">
+                    <button class="btn btn--radius-2 btn--blue-2" type="submit">Submit Review</button>
+                    <a href="<c:url value="/view-claim" />" class="btn btn--radius-2 btn--grey">Cancel</a>
                 </div>
              
             </div>
         </div>
     </div>
+		<script>
+			(function () {
+				'use strict'
+						
+				// Fetch all the forms we want to apply custom Bootstrap validation styles to
+				var forms = document.querySelectorAll('.needs-validation')
+						
+				// Loop over them and prevent submission
+				Array.prototype.slice.call(forms)
+				.forEach(function (form) {
+				form.addEventListener('submit', function (event) {
+				if (!form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+				}
+						
+				form.classList.add('was-validated')
+				}, false)
+				})
+				})()
+			</script>    
        </form:form>
-</section>
 </html>

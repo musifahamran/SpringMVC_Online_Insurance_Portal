@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
-      <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+       <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,14 +23,9 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
 </head>
 <body>
 <section style="background-color: #eee;">
+<form:form class="form-detail" action="update-customer-profile" method="post" id="myform">
   <div class="container py-5">
     <div class="row">
-    <c:if test="${!empty updateMessage}">
-				 <div class="alert  alert-primary alert-dismissible fade show" role="alert">
-				 	<strong align="center">${updateMessage}</strong>
-				 	<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-				 </div>
-				 </c:if>
       <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
@@ -45,11 +40,12 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
           <div class="card-body text-center">
             <img src="resources/image/logo/admin.jpg" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">${adminUser.getFname()} <% out.println(" "); %> ${adminUser.getLname()}</h5>
+            <h5 class="my-3">${customerUser.getFname()} <% out.println(" "); %> ${customerUser.getLname()}</h5>
             
-            <p class="text-muted mb-1">Admin</p>
+            <p class="text-muted mb-1">Customer</p>
             <div class="d-flex justify-content-center mb-2">
-             <a href="edit-profile" class="btn btn-primary" role="button">Edit Profile</a>
+             	<input type="submit" name="updateProfile" class="btn btn-primary" value="Update Profile" modelAttribute="customerModel">
+              <a href="my-profile" class="btn btn-secondary" role="button">Cancel</a>
             </div>
           </div>
         </div>
@@ -62,16 +58,23 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">User Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getUsername()}</p>
+              <p class="text-muted mb-0">${customerUser.getUsername()}</p>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Full Name</p>
+                <p class="mb-0">First Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getFname()} <% out.println(" "); %> ${adminUser.getLname()}</p>
+              <div class="row">
+               <div class="col">
+                <input type="text" name="customer_fname" id="customer_fname" class="input-text" value="${customerUser.getFname()}" required>	
+              </div>
+              <div class="col ">
+                Last Name <input type="text" name="customer_lname" id="customer_lname" class="input-text" value="${customerUser.getLname()}" required>	
+              </div>
+              </div>
               </div>
             </div>
             <hr>
@@ -80,7 +83,8 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getEmail()}</p>
+             <p class="text-muted mb-0"></p>
+              <input type="text" id="customer_email" name="customer_email" style="border: none;" value="${customerUser.getEmail()}" readonly>
               </div>
             </div>
             <hr>
@@ -89,7 +93,7 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Phone</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getContactNo()}</p>
+             <input type="text" id="customer_contactNo" name="customer_contactNo" style="border: none;" value="${customerUser.getContactNo()}" readonly>
               </div>
             </div>
             <hr>
@@ -98,14 +102,16 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <p class="mb-0">Address</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">${adminUser.getAddress()}</p>
+              <input type="text" name="customer_address" id="customer_address" class="input-text" placeholder="Enter address" value="${customerUser.getAddress()}" required>	
               </div>
             </div>
           </div>
         </div>
+    
       </div>
     </div>
   </div>
+  </form:form>
 </section>
 </body>
 </html>

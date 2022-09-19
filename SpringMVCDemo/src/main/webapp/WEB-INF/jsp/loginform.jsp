@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -18,12 +19,14 @@
 body{
     font-family: 'Exo', sans-serif;
 }
-
+.error{
+color:red;
+}
 
 .context {
     width: 100%;
     position: absolute;
-    top:20vh;
+    top:15vh;
     z-index: 1;
     min-height:400px;
     
@@ -210,30 +213,37 @@ margin-left: 4px;
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
 						</div>
-						<form:input path="username" type="text" class="form-control" placeholder="username"/>
-						 <form:errors path="username" cssClass="error"/>
+						<form:input path="username" type="text" class="form-control" placeholder="username"/><br>
+						
 					</div>
+					 <form:errors path="username" cssClass="error"/>
 					<br>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fa fa-key"></i></span>
 						</div>
 						<form:password path="password" class="form-control" placeholder="password"/>
-						 <form:errors path="password" cssClass="error"/>
+						
 					</div>
+					 <form:errors path="password" cssClass="error"/>
 					<br>
 					<div class="form-group" style="padding:0px 50px;">
 						<input type="submit" value="Login" class="btn btn-primary mb-3">
 					</div>
 				</form:form>
 				 <span style="color:red;"id="message">${message}</span>
+				 <c:if test="${!empty invalidMessage}">
+				 <div class="alert  alert-danger" role="alert">
+				 Invalid Username or Password!
+				 </div>
+				 </c:if>
 			</div>
 		<div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="registerform">Sign Up</a>
 				</div>
 				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
+					<a href="forgot-pwd">Forgot your password?</a>
 				</div>
 			</div>
 		</div>
@@ -254,5 +264,20 @@ margin-left: 4px;
                     <li></li>
             </ul>
     </div >
+    <div class="toast" id="myToast" style="z-index:1;background-color:#ffe9ec;position: absolute; top: 100px; left: 40%;" data-delay="5000">
+				    <div class="toast-header">
+				        <strong class="me-auto"> ${updateMessage}</strong>
+				        <small></small>
+				        <button type="button" class="btn-close" data-dismiss="toast"></button>
+				    </div>
+				      <div class="toast-body">
+				      You can proceed to login.
+				      </div>
+				</div>
+      <script>
+  <c:if test="${!empty updateMessage}">
+  		$("#myToast").toast("show");
+  </c:if>
+  </script>
     </section>
 </html>

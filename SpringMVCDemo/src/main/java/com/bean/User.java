@@ -60,14 +60,6 @@ public class User {
 		this.username = username;
 	}
 
-	public String getUserID() {
-		return username;
-	}
-
-	public void setUserID(String userID) {
-		this.username = userID;
-	}
-
 	public String getPassword() {
 		return password;
 	}

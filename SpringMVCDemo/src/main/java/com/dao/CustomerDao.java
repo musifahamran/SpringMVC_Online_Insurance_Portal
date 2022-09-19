@@ -1,6 +1,8 @@
 package com.dao;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.bean.Customer;
+import com.bean.Policy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Repository
-@Transactional
 public class CustomerDao {
 	
 	HibernateTemplate template;
@@ -28,6 +31,27 @@ public class CustomerDao {
 			newCustomer.setRole("customer");
 		}
 		template.persist(newCustomer); 
+	}
+
+	public List<Customer> getAll() {
+		return template.loadAll(Customer.class) ;
+	}
+	
+	@Transactional
+	public Customer getById(int id) {
+		return template.get(Customer.class, id);
+	}
+	
+	@Transactional
+	public void delete(Customer customer) {
+		template.delete(customer);
+		
+	}
+	
+	@Transactional
+	public void update(Customer obj) {
+		template.update(obj);
+		
 	} 
 
 }

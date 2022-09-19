@@ -79,7 +79,7 @@ background-attachment: fixed;
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 order-2 order-lg-1">
-                        <h3>Welcome back ${user.username}</h3>
+                        <h3>Welcome back ${customerUser.getFname()} <% out.println(" "); %> ${customerUser.getLname()}</h3>
                         <p class="lead">Providing the best care at an affordable price</p>
                         <p class="lead"> </p>
                         <p class="lead"></p>

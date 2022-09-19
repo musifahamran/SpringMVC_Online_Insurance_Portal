@@ -1,5 +1,7 @@
 package com.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +16,13 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name = "admin_table")
 @PrimaryKeyJoinColumn(name="user_id")  
-public class Admin extends User{
+public class Admin extends User implements Serializable{
 	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name="admin_id")
 		private int id;
-		
+				
 		@Column(name="admin_fname")
 		private String fname;
 		
@@ -35,6 +37,11 @@ public class Admin extends User{
 		
 		@Column(name="admin_gender")
 		private String gender;
+		
+		@Column(name="admin_address")
+		private String address;
+		
+		public Admin() {}
 
 		public int getId() {
 			return id;
@@ -82,6 +89,13 @@ public class Admin extends User{
 
 		public void setGender(String gender) {
 			this.gender = gender;
-		}	
+		}
 
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}		
 }

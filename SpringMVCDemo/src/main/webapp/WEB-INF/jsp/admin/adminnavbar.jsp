@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
@@ -42,8 +43,8 @@ font-family: 'Lato', sans-serif;
 }
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#b9305c;">
-  <a class="navbar-brand" href="adminPortal">
-  <img src="resources/image/logo/logo_symbol.png" alt="logo" style="width:40px;height:35px;">
+  <a class="navbar-brand" href="<c:url value="/adminPortal"/>">
+  <img src="<c:url value="/resources/image/logo/logo_symbol.png"/>" alt="logo" style="width:40px;height:35px;">
   Prodexa
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,12 +59,9 @@ font-family: 'Lato', sans-serif;
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <div class="row">
          <div class="col-sm">
-        <h6 class="dropdown-header">Menu</h6>
-        <hr class="dropdown-divider">
         	<ul class="multi-column-dropdown">
-        	<li><a class="dropdown-item" href="new-policy">
-			Add New Policy</a></li>
-			<li><a class="dropdown-item" href="update-policy">
+        	<li><a class="dropdown-item" href="<c:url value="/new-policy" />">Add New Policy</a></li>
+			<li><a class="dropdown-item" href="<c:url value="/update-policy" />">
 			Update Policy</a></li>
 			</ul>
           </div>
@@ -71,29 +69,27 @@ font-family: 'Lato', sans-serif;
         </div>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="view-customer">View Customers</a>
+        <a class="nav-link" href="<c:url value="/view-customer" />">View Customers</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="view-claim">View Customer Claims</a>
+        <a class="nav-link" href="<c:url value="/view-claim" />">View Customer Claims</a>
       </li>
     </ul>
     <ul class="navbar-nav ms-auto">
      <li class="nav-item dropdown">
-     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" data-offset="200,200" aria-haspopup="true" aria-expanded="false">
           <span style="top-padding:30px;"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        	<ul class="multi-column-dropdown dropdown-menu-sm-end" style="right-padding:30px">
+        	<ul class="multi-column-dropdown dropdown-menu-sm-end ml-auto">
         	<li><a class="dropdown-item" href="view-profile">
 			View Profile</a></li>
-			<li><a class="dropdown-item" href="change-pwd">
-			Change password</a></li>
-			<li><a class="dropdown-item" href="homePage">
-			Logout</a></li>
+			<li><a class="dropdown-item" href="<c:url value="/change-adminPwd" />">Change password</a></li>
+			<li><a class="dropdown-item" href="<c:url value="/homePage" />">Logout</a></li>
 			</ul>
         </div>
     </li>
       <li class="nav-item">
-        <a class="nav-link" href="homePage">Logout</a>
+        <a class="nav-link" href="<c:url value="/homePage" />">Logout</a>
       </li>
     </ul>
   </div>

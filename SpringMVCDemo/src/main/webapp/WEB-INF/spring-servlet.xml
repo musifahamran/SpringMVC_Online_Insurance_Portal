@@ -60,6 +60,12 @@
 					<value>com.bean.User</value>
 					<value>com.bean.Customer</value>
 					<value>com.bean.Admin</value>
+					<value>com.bean.Policy</value>
+					<value>com.bean.PolicyType</value>
+					<value>com.bean.PolicyPlan</value>
+					<value>com.bean.CustomerPolicy</value>
+					<value>com.bean.Claim</value>
+					<value>com.bean.ClaimDocument</value>
 			</list>
 		</property>
 </bean>   
@@ -82,5 +88,46 @@
 	</bean>
 	<bean id="admindao" class="com.dao.AdminDao">    
 	<property name="template" ref="sessionFactory"></property>    
-	</bean>       
+	</bean>
+	<bean id="policydao" class="com.dao.PolicyDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean>  
+	<bean id="policytypedao" class="com.dao.PolicyTypeDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean> 
+	<bean id="policyplandao" class="com.dao.PolicyPlanDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean> 
+	<bean id="customerpolicydao" class="com.dao.CustomerPolicyDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean> 
+	<bean id="claimdocumemntdao" class="com.dao.ClaimDocumentDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean>
+	<bean id="claimdao" class="com.dao.ClaimDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean>
+	<bean id="emaildao" class="com.dao.EmailDao">    
+	<property name="template" ref="sessionFactory"></property>    
+	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <property name="maxUploadSize" value="20971520" />
+    <!-- Maximum Size Of File In Memory (In Bytes) -->
+        <property name="maxInMemorySize" value="1048576" />
+	</bean>
+	 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="prodexa.spring@gmail.com" />
+        <property name="password" value="cikkugwzoicbpupf"/>
+         <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+    
 </beans>  

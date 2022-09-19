@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <meta charset="ISO-8859-1">
@@ -46,7 +48,7 @@ font-family: 'Lato', sans-serif;
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#b9305c;">
   <a class="navbar-brand" href="customerPortal">
-  <img src="resources/image/logo/logo_symbol.png" alt="logo" style="width:40px;height:35px;">
+  <img src="<c:url value="/resources/image/logo/logo_symbol.png"/>" alt="logo" style="width:40px;height:35px;">
   Prodexa
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,9 +68,9 @@ font-family: 'Lato', sans-serif;
         <div class="row">
          <div class="col-sm">
         	<ul class="multi-column-dropdown">
-        	<li><a class="dropdown-item" href="my-claim">
+        	<li><a class="dropdown-item" href="<c:url value="/my-claim" />">
 			View Claim</a></li>
-			<li><a class="dropdown-item" href="make-claim">
+			<li><a class="dropdown-item" href="<c:url value="/make-claim" />">
 			Make Claim</a></li>
 			</ul>
           </div>
@@ -76,10 +78,10 @@ font-family: 'Lato', sans-serif;
         </div>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="purchase-policy">Purchase Policy</a>
+        <a class="nav-link" href="<c:url value="/purchase-policy" />">Purchase Policy</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="customer-support">Support</a>
+        <a class="nav-link" href="<c:url value="/customer-support" />">Support</a>
       </li>
     </ul>
    <ul class="navbar-nav ms-auto">
@@ -88,17 +90,17 @@ font-family: 'Lato', sans-serif;
           <span style="top-padding:30px;"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         	<ul class="multi-column-dropdown dropdown-menu-sm-end" style="right-padding:30px">
-        	<li><a class="dropdown-item" href="view-profile">
+        	<li><a class="dropdown-item" href="<c:url value="/my-profile" />">
 			View Profile</a></li>
-			<li><a class="dropdown-item" href="change-pwd">
+			<li><a class="dropdown-item" href="<c:url value="/change-pwd" />">
 			Change password</a></li>
-			<li><a class="dropdown-item" href="homePage">
+			<li><a class="dropdown-item" href="<c:url value="/homePage" />">
 			Logout</a></li>
 			</ul>
         </div>
     </li>
       <li class="nav-item">
-        <a class="nav-link" href="homePage">Logout</a>
+        <a class="nav-link" href="<c:url value="/homePage" />">Logout</a>
       </li>
     </ul>
   </div>

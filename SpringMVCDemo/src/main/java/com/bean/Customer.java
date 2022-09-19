@@ -1,15 +1,27 @@
 package com.bean;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "customer")
@@ -48,6 +60,20 @@ public class Customer extends User{
 	
 	@Column(name="cus_companyName")
 	private String companyName;
+	
+	@Column(name="cus_address")
+	private String address;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity=CustomerPolicy.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="cid") 
+	private List<CustomerPolicy> customerpolicy;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity=Claim.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="claim_customer_id") 
+	private List<Claim> claim;
+	
 	
 	public String getFname() {
 		return fname;
@@ -104,5 +130,37 @@ public class Customer extends User{
 		this.companyName = companyName;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<CustomerPolicy> getCustomerpolicy() {
+		return customerpolicy;
+	}
+
+	public void setCustomerpolicy(List<CustomerPolicy>  customer_policy) {
+		this.customerpolicy = customer_policy;
+	}
+
+	public List<Claim> getClaim() {
+		return claim;
+	}
+
+	public void setClaim(List<Claim> claim) {
+		this.claim = claim;
+	}
+	
 
 }

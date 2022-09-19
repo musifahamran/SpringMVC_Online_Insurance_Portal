@@ -101,6 +101,12 @@
     <definition name="contactUs" extends="base.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/contactUs.jsp" />  
     </definition>
+    <definition name="forgotPassword" extends="base.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/forgotPassword.jsp" />  
+    </definition>
+    <definition name="forgotPasswordUpdate" extends="base.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/forgotPasswordUpdate.jsp" />  
+    </definition>
     
     <!-- Admin Definitions -->
      <definition name="adminPortal" extends="base3.definition">  
@@ -126,7 +132,27 @@
     <definition name="adminProfile" extends="base3.definition">  
         <put-attribute name="title" value="View Admin Profile" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/admin/adminProfile.jsp" />  
+    </definition>
+    <definition name="adminEditProfile" extends="base3.definition">  
+        <put-attribute name="title" value="View Admin Profile" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminEditProfile.jsp" />  
     </definition> 
+     <definition name="adminUpdateForm" extends="base3.definition">  
+        <put-attribute name="title" value="View Admin Profile" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminUpdateForm.jsp" />  
+    </definition> 
+     <definition name="adminVerifyCustomerPolicy" extends="base3.definition">  
+        <put-attribute name="title" value="Review Customer Policy" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminVerifyCustomerPolicy.jsp" />  
+    </definition> 
+      <definition name="adminReviewClaim" extends="base3.definition">  
+        <put-attribute name="title" value="Review Customer Policy" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminReviewClaim.jsp" />  
+    </definition> 
+      <definition name="adminChangePassword" extends="base3.definition">  
+        <put-attribute name="title" value="Change Password" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/adminChangePassword.jsp" />  
+    </definition>    
     
     <!-- Customer Definitions -->
     <definition name="customerPortal" extends="base4.definition">  
@@ -161,10 +187,17 @@
         <put-attribute name="title" value="CustomerPage" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/customer/customerUpdateClaim.jsp" />  
     </definition>
-  	
-   <!-- Common Definition -->
-     <definition name="changePassword" extends="base3.definition">  
+      <definition name="customerProfile" extends="base2.definition">  
+        <put-attribute name="title" value="View Admin Profile" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/customer/customerProfile.jsp" />  
+    </definition>
+    <definition name="customerEditProfile" extends="base2.definition">  
+        <put-attribute name="title" value="View Admin Profile" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/customer/customerEditProfile.jsp" />  
+    </definition> 
+       <definition name="customerChangePassword" extends="base2.definition">  
         <put-attribute name="title" value="Change Password" /> 
-        <put-attribute name="body" value="/WEB-INF/jsp/changePassword.jsp" />  
-    </definition>         
+        <put-attribute name="body" value="/WEB-INF/jsp/customer/customerChangePassword.jsp" />  
+    </definition>  
+  	
 </tiles-definitions> 

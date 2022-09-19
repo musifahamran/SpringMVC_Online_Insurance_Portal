@@ -18,7 +18,7 @@
 			</p>
 		</div>
 		<div class="col-4">
-			            <a href="my-policy" class="card stretched-link text-center">
+			            <a href="#" class="card stretched-link text-center" style="text-decoration:none;">
 			              <div class="image">
 			                 <img src="resources/image/logo/contactus-illustration.png" alt =" agent_logo" width="120">  
 			                 </div>
