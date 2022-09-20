@@ -748,16 +748,7 @@ function populate(type,name){
 	}
 	
 }
-function preview_images() 
-{
- var total_file=document.getElementById("file").files.length;
- for(var i=0;i<total_file;i++)
- {
-	 var path = URL.createObjectURL(event.target.files[i]);
-	 var objectName = path.split('/');
-  $('#image_preview').append("<div class='col-md-3'><input class='image-responsive' value='"+objectName[ objectName.length-1 ]+"'></div>");
- }
-}
+
 </script>
 <section class="table-responsive-sm" style="width:80%; margin:0 auto;">
 <c:choose>

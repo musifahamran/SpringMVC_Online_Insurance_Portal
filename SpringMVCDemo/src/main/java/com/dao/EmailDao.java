@@ -37,38 +37,40 @@ public class EmailDao {
 		 helper.setText(message);
 		 emailSender.send(mimeEmail);		
 	}
-	public String policyPurchaseMssg(String policyName) {
-	
-		return "You have purchased the " + policyName + " policy. Kindly wait for our Agent's response on your purchase.";
+	public String policyPurchaseMssg(Customer c1, String policyName) {
+		String greeting = "Hi " + c1.getFname() + " " + c1.getLname() + ",\n\n ";
+		String content= "You have purchased the " + policyName + " policy. Kindly wait for our Agent's response on your purchase.";
+		String ending = "\n\nHave a nice day.";
+		return greeting + content+ ending;
 	}
 
 	public String upgradePlan(Customer c1, int id, PolicyPlan p1) {
-		String greeting = "Hi " + c1.getFname() + " " + c1.getLname() + ",<br><br> ";
+		String greeting = "Hi " + c1.getFname() + " " + c1.getLname() + ",\n\n ";
 		String content = "";
 		for(CustomerPolicy customerPolicy:c1.getCustomerpolicy()) {
 			if(customerPolicy.getCustomerpolicy_id() == id) {
 				content = "This is a confirmation email to let you know that your policy plan for " + customerPolicy.getPolicy().getName() 
-						+ " has been upgraded to Premium. <br><br>Premium Plan: " 
-						+ "<br>Rate (%): " + p1.getRate() + "<br>Duration (Year): " +p1.getDuration() + "<br>Coverage: $" + String.format("%.0f",p1.getCoverage())
-						+ "<br>Total Price: $" + String.format("%.0f",(customerPolicy.getPolicy().getPrice()+p1.getAdditional_charge())) + "<br><br> You will be charged monthly at: $" + 
+						+ " has been upgraded to Premium. \n\nPremium Plan: " 
+						+ "\nRate (%): " + p1.getRate() + "\nDuration (Year): " +p1.getDuration() + "\nCoverage: $" + String.format("%.0f",p1.getCoverage())
+						+ "\nTotal Price: $" + String.format("%.0f",(customerPolicy.getPolicy().getPrice()+p1.getAdditional_charge())) + "\n\n You will be charged monthly at: $" + 
 						String.format("%.0f", ((customerPolicy.getPolicy().getPrice()+p1.getAdditional_charge())/12*p1.getDuration()))
-						+"<br>Our Agent will shortly contact you for more details.";
+						+"\nOur Agent will shortly contact you for more details.";
 				break;
 			}
 		}
-		String ending = "<br><br>Thank you for using Prodexa's Insurance Portal. Have a nice day.";
+		String ending = "\n\nThank you for using Prodexa's Insurance Portal. Have a nice day.";
 		
 		
 		return greeting + content + ending;
 	}
 	
 	public String successRegistration(Customer c1) {
-		String greeting = "Hi " + c1.getFname() + " " + c1.getLname() + ",<br><br>";
+		String greeting = "Hi " + c1.getFname() + " " + c1.getLname() + ",\n\n";
 		String content = "Thank for registering at Prodexa Insurance Portal! \n"
 				+ "This is a confirmation email to let you know that you have registered this email account with us."
-				+ "<br>Any future communications and updates will be sent to this email address.";
+				+ "\nAny future communications and updates will be sent to this email address.";
 		
-		String ending = "<br><br>Thank you for signing up on Prodexa's Online Insurance Portal. Have a nice day.";
+		String ending = "\n\nThank you for signing up on Prodexa's Online Insurance Portal. Have a nice day.";
 		
 		
 		return greeting + content + ending;

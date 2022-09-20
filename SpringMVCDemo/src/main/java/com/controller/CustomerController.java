@@ -254,7 +254,7 @@ public class CustomerController {
 		 	c1.setCustomerpolicy(customerPolicyList);
 		 	redirArr.addFlashAttribute("successMessage", "Kindly wait for our response on your purchase.");
 		 	int i = customerpolicydao.save(c1);
-		 	String emailContent = emaildao.policyPurchaseMssg(customer_policy.getPolicy().getName());
+		 	String emailContent = emaildao.policyPurchaseMssg(c1,customer_policy.getPolicy().getName());
 		 	emaildao.sendMessage(c1.getEmail(),"Policy Purchase", emailContent);
 
 	        return "redirect:purchase-policy";   
