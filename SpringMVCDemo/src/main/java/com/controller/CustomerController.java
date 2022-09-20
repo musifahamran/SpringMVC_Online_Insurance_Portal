@@ -219,7 +219,7 @@ public class CustomerController {
 		 }
 		 else {
 			 List<String> invalidMessage = customerdao.check(customer);
-			 if(invalidMessage == null) {
+			 if(invalidMessage.isEmpty()) {
 				 customerdao.add(customer);
 				 String emailContent = emaildao.successRegistration(customer);
 				 emaildao.sendMessage(customer.getEmail(),"Welcome to Prodexa", emailContent);
